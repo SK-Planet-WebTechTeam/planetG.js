@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Game Engine</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <style>
+        body {padding:0;margin:0;}
+        #container {position:relative;}
+        #timer {position:absolute; left:10px; top:10px; color:white; background: black}
+        #gameCanvas {border-bottom:1px solid white;}
+    </style>
+</head>
+<body>
+	<div id="container">
+        <span id="timer">READY</span>
+		<canvas id="gameCanvas"></canvas>
+	</div>
+    <script src="../../engine/lib/polyfill.js"></script>
+    <script src="../../engine/lib/promise-0.1.1.js"></script>
+    <script src="../../engine/lib/require.js" data-main="js/main.js"></script>
+</body>
+</html>
