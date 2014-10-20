@@ -1,0 +1,14 @@
+{
+  "name": "pwge",
+  "version": "0.1.0",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "jsdoc": "~3.3.0-alpha2",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-closure-compiler": "0.0.21",
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-shell": "~0.6.1",
+    "grunt-contrib-uglify": "~0.3.2"
+  }
+}

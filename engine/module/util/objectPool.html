@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <title>setTimeout/requestAnimationFrame</title>
+    <style>
+    </style>
+</head>
+<body>
+    <script>
+    /**
+     * util/ObjectPool 객체 풀 모듈
+     * @exports util/ObjectPool
+     * @param {Function} ConstructorFunction 생성자 함수
+     * @param {Number} expandCount    객체 풀에 생성해 놓을 객체의 개수
+     */
+    var ObjectPool = function(ConstructorFunction, expandCount){
+        this._ConstructorFunction = ConstructorFunction;
+
+        this._pool = [];
+        this._allocated = [];
+
+        this.expand(expandCount || 0);
+    };
+
+    /**
+     * 객체 풀에서 객체를 하나 가져온다.
+     * @method
+     * @return {Object} 객체
+     */
+    ObjectPool.prototype.allocate = function() {
+        var obj;
+
+        if (this._pool.length === 0) {
+            this.expand(16);
+        }
+
+        obj = this._pool.splice(0, 1)[0]; //FIFO
+        this._ConstructorFunction.apply(obj, arguments);
+        this._allocated.push(obj);
+        return obj;
+    };
+
+    /**
+     * 객체를 다시 풀로 되돌려서 사용가능한 상태로 만든다.
+     * @param  {Object} obj 반환할 객체
+     * @return {ObjectPool}
+     */
+    ObjectPool.prototype.free = function(obj) {
+        var index = this._allocated.indexOf(obj);
+        if (index > -1) {
+            this._allocated.splice(index, 1);
+            this._pool.push(obj);
+
+            // for (var k in obj) {
+            //     delete obj[k];
+            // }
+            this.reset(obj);
+        }
+
+        return this;
+    };
+
+    /**
+     * 객체를 초기화시킨다.
+     * @param  {Object} obj 반환할 객체
+     * @return {Object} 초기화된 객체
+     */
+    ObjectPool.prototype.reset = function(obj) {
+        this._ConstructorFunction.call(obj);
+
+        for (var key in this._ConstructorFunction.prototype) { //delete overided props
+            if (this._ConstructorFunction.prototype.hasOwnProperty(key) && obj.hasOwnProperty(key)) {
+                delete obj[key];
+            }
+        }
+
+        return obj;
+    };
+
+    /**
+     * 객체 풀을 확장한다.
+     * @param  {Number} n 객체 풀에 확장하여 할당해 놓을 객체의 개수
+     * @return {ObjectPool}
+     */
+    ObjectPool.prototype.expand = function(n) {
+        var obj;
+        while (n--) {
+            obj = new this._ConstructorFunction();
+            obj._objectPool = this;
+            this._pool.push(obj);
+        }
+
+        return this;
+    };
+
+    // 실제 benchmarking이 작성된다.
+    var entityPoolSize = 300,
+        boardSize = 10000,
+        board = [],
+        opEnable = true,
+        Entity = function(){
+            this.id = 1;
+            this.owner = null;
+            this.enabled = true;
+            this.baseImage = null;
+            this.baseSprite = null;
+            this.animation = null;
+            this.animationStart = 0;
+            this.animationEnd = 0;
+            this.sprite = null;
+            this.spriteStart = 0;
+            this.spriteEnd = 0;
+            this.detectable = true;
+            this.opacity = 1;
+            this.anchorX = 0;
+            this.anchorY = 0;
+            this.rotate = 0;
+            this.scaleX = 1;
+            this.scaleY = 1;
+            this.x = 0;
+            this.y = 0;
+            this.z = 0;
+            this._z = 0;
+            this.width = 0;
+            this.height = 0;
+        };
+
+    var entityPool = new ObjectPool(Entity, entityPoolSize);
+
+    function loop() {
+        var i;
+        //reset board
+        board = [];
+
+        //allocate
+        i = boardSize;
+        while(i--){
+            board.push( entityPool.allocate() );
+        }
+        //free
+        i = boardSize;
+        while(i--){
+            entityPool.free(board[i]);
+            board[i] = null;
+        }
+        requestAnimationFrame(loop);
+    }
+    function loop2(){
+        var i;
+        //reset board
+        board = [];
+
+        //allocate
+        i = boardSize;
+        while(i--){
+            board.push( new Entity );
+        }
+        //free
+        i = boardSize;
+        while(i--){
+            board[i] = null;
+        }
+        requestAnimationFrame(loop2);
+    }
+    if(opEnable){
+        loop();
+    } else {
+        loop2();
+    }
+    </script>
+</body>
+</html>
