@@ -24,5 +24,8 @@ Example Games (Coming Soon)
 
 Project Maintainer
 - Lim, Sang Seok (sangseok.lim@gmail.com)
-- Bae, Cheol Min
+- Bae, Cheol Min (cifals0904@gmail.com)
 - Kwak, NoHyun (kwakmark@gmail.com)
+
+Project Sponsor
+- SK planet (www.skplanet.com)
