@@ -13,7 +13,7 @@ Major Features
 - multi-resolution support for various devicePixelRatio handling
 - general game engine feature including sound (WebAudio/Audio tag), Sprite Animation, etc
 
-Maintailer
+Project Maintainer
 - Lim, Sang Seok (sangseok.lim@gmail.com)
 - Bae, Cheol Min
 - Kwak, NoHyun (kwakmark@gmail.com)
