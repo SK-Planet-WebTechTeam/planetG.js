@@ -2,8 +2,10 @@ HTML5 Game Engine
 ========================
 
 This project contains the commercially-proven HTML5 game engine based on canvas and DOM/GPU for mobile devices (Android and iOS).
-There are a number of HTML5 game engine out there. We differentiate our engine from others by providing mobile-device performance optimized techniques.
-One of them is to support hybrid rendering model of <canvas> and DOM/GPU HW acceleratoin.
+Even there are a number of open source HTML5 game engines out there, we're proud of our engine by differentiating it from others,
+which provides mobile-device optimized performance improvement techniques.
+One of them is to support hybrid rendering context of <canvas> and DOM/GPU HW acceleratoin.
+By capatilizing on the hybrid rendering context, a game based on our engine can be developed to run on even Android 2.3.x and 4.4/4.4.2 (which has severe performance limitation due to Chrome Webview defect)
 
 Major Features
 - require.js based modularization
