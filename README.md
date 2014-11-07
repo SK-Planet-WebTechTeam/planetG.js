@@ -18,7 +18,7 @@ Major Features
 Example Games (Coming Soon)
 - Flappy ball
 - Piano tiles
-- Avoidance
+- Avoidance (done)
 - Baseball
 - Basket ball
 
