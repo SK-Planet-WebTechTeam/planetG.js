@@ -22,6 +22,9 @@ Example Games (Coming Soon)
 - Baseball
 - Basket ball
 
+Technical Documents
+- http://www.slideshare.net/infect2/korea-linuxforum2014-html5gamesangseoklim
+
 Project Maintainer
 - Lim, Sang Seok (sangseok.lim@gmail.com)
 - Bae, Cheol Min (cifals0904@gmail.com)
