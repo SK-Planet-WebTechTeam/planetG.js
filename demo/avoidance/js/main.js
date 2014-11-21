@@ -1,7 +1,7 @@
 requirejs.config({
     baseUrl: '../../engine/module',
     paths : {
-        game : "../../game/avoidance/js"
+        game : "../../demo/avoidance/js"
     }
 });
 
