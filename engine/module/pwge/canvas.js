@@ -1,6 +1,6 @@
 define("pwge/canvas", function(){
     /**
-     * canvas 모듈
+     * canvas constructor itself
      * @class
      * @exports pwge/canvas
      * @param {pwge/game}
@@ -10,9 +10,9 @@ define("pwge/canvas", function(){
     };
 
     /**
-     * canvas 엘리먼트를 설정한다.
-     * canvas 엘리먼트가 아닐경우, container로 설정하고, 그 안에 새로운 canvas 엘리먼트를 만든다.
-     * @param {HTMLCanvasElement | HTMLElement} el canvas 엘리먼트
+     * set el into this.element if it is a canvas element
+     * if not, el is considered as a container element, thus create a canvas element as the child of el
+     * @param {HTMLCanvasElement | HTMLElement} el canvas element
      */
     Canvas.prototype.setElement = function(el){
         if (el.tagName.toLowerCase() === "canvas") {
@@ -30,9 +30,9 @@ define("pwge/canvas", function(){
     };
 
     /**
-     * canvas 엘리먼트를 resize한다.
-     * @param  {Number} w 너비
-     * @param  {Number} h 높이
+     * resize canvas with the given width, height, and pixel ratios accordingly
+     * @param  {Number} w width
+     * @param  {Number} h height
      * @return {canvas}   this
      */
     Canvas.prototype.resize = function(w, h, pixelRatio){
@@ -52,28 +52,19 @@ define("pwge/canvas", function(){
     };
 
     /**
-     * canvas를 모두 지운다.
+     * clear canvas
      * @return {canvas} this
      */
     Canvas.prototype.clear = function() {
-
-        // this.ctx.save(); 
-
-        // this.ctx.fillStyle = "#fff";
-        //this.ctx.fillStyle = "rgba(255, 255, 255, 1.0)";
-        // this.ctx.flobalAlpha = 1;
-        // this.ctx.fillRect(0, 0, this.width, this.height);
-
-        // this.ctx.restore();
-
-        // this.ctx.clearRect(0, 0, this.width, this.height); //beware do this on android
+        // this.ctx.clearRect(0, 0, this.width, this.height);
+        // due to the abnormal behaviour on android 2.3, height is decremented by one
         this.ctx.clearRect(0, 0, this.width, this.height - 1);
         return this;
     };
 
     /**
-     * offscreen canvas element를 생성한다.
-     * offscreen canvas element는 Canvas.element와 동일한 크기를 가진다.
+     * create offscreen canvas element
+     * the size of offscree canvas is identical to that of Canvas.element
      * @return {HTMLCanvasElement}
      */
     Canvas.prototype.offscreen = function(){
