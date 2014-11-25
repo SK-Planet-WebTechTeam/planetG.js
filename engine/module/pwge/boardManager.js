@@ -1,15 +1,15 @@
 define("pwge/board", ["pwge/boardManager", "pwge/util"], function(boardManager, util){
     /**
-     * Board 객체를 생성한다.
-     * Board 객체는 util/ObjectPool로 관리되며 boardPool.allocate() 메서드로 할당해 사용한다.
+     * Board object constructor
+     * Board manage a set of Entities for rendering
      * @class
-     * @param {String} name Board의 이름
-     * @param {Object} options 옵션 객체
+     * @param {String} name Board's name string
+     * @param {Object} options option object
      * @example
      * var newBoard = boardPool.allocate("boardname");
      *
      * @example
-     * var newBoard = boardPool.allocate("boardname", { x : 50, y : 100 }); //Board의 기준점. Board내의 모든 Entity들의 위치값에 영향을 준다.
+     * var newBoard = boardPool.allocate("boardname", { x : 50, y : 100 }); //All entitie Board의 기준점. Board내의 모든 Entity들의 위치값에 영향을 준다.
      */
     var Board = function(name, options){
         this.name = name;
@@ -55,8 +55,8 @@ define("pwge/board", ["pwge/boardManager", "pwge/util"], function(boardManager, 
         }
     };
     /**
-     * Board에 Entity를 추가한다.
-     * @param {Entity} entity Entity 객체
+     * add Entity into Board.
+     * @param {Entity} entity Entity object
      * @return {Board}
      */
     Board.prototype.addEntity = function(entity) {
@@ -104,15 +104,15 @@ define("pwge/board", ["pwge/boardManager", "pwge/util"], function(boardManager, 
         return this;
     };
     /**
-     * Entity를 찾는다.
-     * @param  {Entity | String | Function} entity 또는 entity.id 또는 비교함수
+     * find Entity within Board
+     * @param  {Entity | String | Function} Entity, entity.id, or comparator function
      * @return {Entity | Array | null}
      *
      * @example
      * board.findEntity(entity)
      * board.findEntity("id")
      * board.findEntity(function(entity) {
-     *     return entity.type === "test"; //또는 this.type === "test"
+     *     return entity.type === "test"; //this.type === "test"
      * });
      */
     Board.prototype.findEntity = function(entity) {
@@ -154,7 +154,7 @@ define("pwge/board", ["pwge/boardManager", "pwge/util"], function(boardManager, 
     };
 
     /**
-     * 이벤트 위치에 해당하는 Entity를 찾는다.
+     * find and return Entity located by the given x and y.
      * @param {Number} x
      * @param {Number} y
      * @return {Entity | null}
@@ -190,24 +190,21 @@ define("pwge/board", ["pwge/boardManager", "pwge/util"], function(boardManager, 
     };
 
     /**
-     * Entity를 Board에서 제거한다.
-     * @param  {Entity | String} entity 제거할 Entity 혹은 Entity.id
+     * remove Entity within Board.
+     * @param  {Entity | String} entity Entity or Entity.id to be removed
      * @return {Board}
      */
     Board.prototype.removeEntity = function(entity) {
         entity = this.findEntity(entity);
         if (entity) {
             entity.owner = null;
-            // console.log("entitiy destroyed", entity, entity.owner, this.entities.indexOf(entity));
             this.entities.splice(this.entities.indexOf(entity), 1);
-            // console.log(this.entities.length)
             this.dirty = true;
         }
         return this;
     };
     /**
-     * Board가 렌더링되도록 enable 시킨다.
-     * 동시에 다시재생될 수 있도록 resume된다.
+     * enable Board to do rendering.
      * @return {Board}
      */
     Board.prototype.enable = function() {
@@ -219,8 +216,7 @@ define("pwge/board", ["pwge/boardManager", "pwge/util"], function(boardManager, 
         return this;
     };
     /**
-     * Board가 렌더링되지 않도록 disable 시킨다.
-     * 동시에 재생이 진행되지 않도록 pause된다.
+     * disable Board not to do rendering.
      * @return {Board}
      */
     Board.prototype.disable = function() {
@@ -232,8 +228,8 @@ define("pwge/board", ["pwge/boardManager", "pwge/util"], function(boardManager, 
         return this;
     };
     /**
-     * 재생을 중지시키기 위해 pause시킨다.
-     * step메서드내에서 타임라인이 진행되지 않도록 한다.
+     * stop progressing
+     * the step method of timeline will be paused
      * @return {Board}
      */
     Board.prototype.pause = function() {
@@ -245,8 +241,8 @@ define("pwge/board", ["pwge/boardManager", "pwge/util"], function(boardManager, 
         return this;
     };
     /**
-     * 다시재생시키기 위해 resume시킨다.
-     * step메서드내에서 타임라인이 다시 진행되도록 한다.
+     * resume progressing
+     * the step method of timeline will be resumed
      * @return {Board}
      */
     Board.prototype.resume = function() {
@@ -258,16 +254,16 @@ define("pwge/board", ["pwge/boardManager", "pwge/util"], function(boardManager, 
         return this;
     };
     /**
-     * Board의 현재 타임라인 진행 시간을 리턴한다.
-     * @return {Number} 타임라인 진행 시간
+     * return the time progress of Board.
+     * @return {Number} time progress
      */
     Board.prototype.now = function() {
         return this.past;
     };
 
     /**
-     * 렌더러에 의해 호출되어, Board의 타임라인 진행에 따라 포함된 Entitiy들의 위치값을 계산하는 step함수를 실행시킨다.
-     * @param  {String} dt 렌더러의 타임라인 진행시간
+     * called by Renderer, it calls the step method of all Entities of Board
+     * @param  {String} dt time progress of caller, or Renderer
      */
     Board.prototype.step = function(dt) {
         var i, len;
@@ -289,11 +285,9 @@ define("pwge/board", ["pwge/boardManager", "pwge/util"], function(boardManager, 
                 this.entities[i].step.call(this.entities[i], dt);
             }
         }
-
-        // console.log(dt)
     };
     /**
-     * 렌더러에 의해 호출되어, Board의 타임라인 진행에 따라 포함된 Entitiy들의 페인팅을 담당하는 step함수를 실행시킨다.
+     * called by Renderer, it calls the draw method of all Entities of Board
      * @param  {String} dt 렌더러의 타임라인 진행시간
      */
     Board.prototype.draw = function(dt) {
@@ -315,7 +309,7 @@ define("pwge/board", ["pwge/boardManager", "pwge/util"], function(boardManager, 
         for (i = 0, len = this.entities.length; i < len; i++) {
             if (this.entities[i] && this._boardManager._owner.renderer.isRendering && this.enabled && this.entities[i] && this.entities[i].owner === this && this.entities[i].enabled) {
                 item = this.entities[i];
-                item.saveDrawRect();//이전 frame의 draw rect를 저장
+                item.saveDrawRect();
                 item.draw(dt);
                 invalidated = item._checkDirty();
                 if(!this._boardManager._owner.config.clearCanvasOnEveryFrame && invalidated && !item.rootBG && !item.domRendering){
@@ -323,7 +317,6 @@ define("pwge/board", ["pwge/boardManager", "pwge/util"], function(boardManager, 
                 }
             }
         }
-        // console.log(dt)
     };
     Board.prototype._flush = function() {
         var i, len, orderedEntities;
@@ -338,7 +331,8 @@ define("pwge/board", ["pwge/boardManager", "pwge/util"], function(boardManager, 
                     orderedEntities[i]._flush();
                 }
                 else {
-                    //Root BG일 경우만 다시 전체를 다시 그리지 않고 invalidate 영역만을 이전 frame buffer(cavas)에 그림
+                    // When Entity contains a root background and DOMRender is enabled,
+                    // only invalided regions are partially flushed
                     orderedEntities[i]._updateInvalidatedRegion(bm.invalidatedRects);
                 }
             }
@@ -347,8 +341,8 @@ define("pwge/board", ["pwge/boardManager", "pwge/util"], function(boardManager, 
         this._setLastStep();
     };
     /**
-     * Board의 타임라인 진행에 따라 실행할 콜백을 등록한다.
-     * @param  {Array} timeline 타임라인정보 배열
+     * register timeline callbacks
+     * @param  {Array} timeline Array of timeline
      * @return {Board}
      */
     Board.prototype.timeline = function(timeline) {
@@ -358,7 +352,7 @@ define("pwge/board", ["pwge/boardManager", "pwge/util"], function(boardManager, 
         return this;
     };
     /**
-     * timeline메서드로 등록된 타임라인정보를 가지고, step 메서드에서 현재 진행시간에 맞는 콜백을 실행시킨다.
+     * timeline callbacks are expired by dt
      * @param   {Number} dt 타임라인진행 시간
      * @return  {Board}
      * @private
@@ -378,8 +372,7 @@ define("pwge/board", ["pwge/boardManager", "pwge/util"], function(boardManager, 
     };
 
     /**
-     * board를 삭제한다.
-     * 삭제된 후에는 다시 객체 풀에 반환된다.
+     * destroy Board and then it is returned into ObjectPool.
      */
     Board.prototype.destroy = function() {
         this.entities.length = 0;
@@ -396,7 +389,7 @@ define("pwge/board", ["pwge/boardManager", "pwge/util"], function(boardManager, 
 
 define("pwge/boardManager", ["util/ObjectPool", "pwge/board", "pwge/util"], function(ObjectPool, Board, util){
     /**
-     * boardManager 모듈
+     * BoardManager Constructor
      * @exports pwge/boardManager
      * @requires pwge/board
      * @requires pwge/renderer
@@ -408,9 +401,9 @@ define("pwge/boardManager", ["util/ObjectPool", "pwge/board", "pwge/util"], func
     };
 
     /**
-     * Board를 만든다.
-     * 이미 같은 이름의 보드가 있으면 해당 보드를 리턴한다.
-     * @param {String} name 만들 보드의 이름
+     * make Board and add it into BoardManager.
+     * if Board with the same name exist, just return it
+     * @param {String} name the name of Board
      * @return {Board}
      */
     BoardManager.prototype.makeBoard = function(name, options) {
@@ -419,7 +412,7 @@ define("pwge/boardManager", ["util/ObjectPool", "pwge/board", "pwge/util"], func
 
         options = options || {};
 
-        if (board) { //이미 만들어진 보드가 있으면 options를 재지정해준다.
+        if (board) { //if Board already exists, return it after updating options
             this._boardPool._ConstructorFunction.call(board, name, options);
             return board;
         }
@@ -431,8 +424,8 @@ define("pwge/boardManager", ["util/ObjectPool", "pwge/board", "pwge/util"], func
     };
 
     /**
-     * Board를 가져온다.
-     * @param  {String} name 가져올 보드의 이름
+     * get Board.
+     * @param  {String} name the name of Board
      * @return {Board | null}
      */
     BoardManager.prototype.getBoard = function(name) {
@@ -450,7 +443,7 @@ define("pwge/boardManager", ["util/ObjectPool", "pwge/board", "pwge/util"], func
     };
 
     /**
-     * Z에 의해 sort된 Board를 가져온다.
+     * sort all Boards of BoardManager by Z value
      */
     BoardManager.prototype.sortByZBoards = function() {
         this._orderedBoards = util.sortByZ( this.getBoard() );
@@ -458,15 +451,15 @@ define("pwge/boardManager", ["util/ObjectPool", "pwge/board", "pwge/util"], func
     };
 
     /**
-     * Z에 의해 sort된 Board를 가져온다.
+     * get all Boards of BoardManager
      */
     BoardManager.prototype.getSortByZBoards = function() {
         return this._orderedBoards;
     };
 
     /**
-     * Board를 제거한다.
-     * @param  {String} name 제거할 보드의 이름
+     * remove Board out of BoardManager.
+     * @param  {String} name the name of Board to be removed
      * @return {boardManager}
      */
     BoardManager.prototype.removeBoard = function(name) {
@@ -482,16 +475,8 @@ define("pwge/boardManager", ["util/ObjectPool", "pwge/board", "pwge/util"], func
         return this;
     };
 
-    // boardManager.addAsBox2dWorld = function(name, b2World) {
-    //     this.makeBoard(name);
-    //     this.getBoard(name).b2World = b2World;
-
-    //     return this;
-    // };
-
-
     /**
-     * Board에서 Entity를 찾는다.
+     * find Entity from Boards.
      */
     BoardManager.prototype.findEntity = function(entity) {
         var ret = [], entities;
@@ -515,7 +500,7 @@ define("pwge/boardManager", ["util/ObjectPool", "pwge/board", "pwge/util"], func
     };
 
     /**
-     *  enabled된 Board에서 Entity를 찾는다.
+     * find and return Entity located by the given x and y.
      */
     BoardManager.prototype.detect = function(x, y) {
         var entity, i;
@@ -531,9 +516,8 @@ define("pwge/boardManager", ["util/ObjectPool", "pwge/board", "pwge/util"], func
     };
 
     /**
-     * Board를 enable시킨다.
-     * enable된 board는 renderer에 의해 재생된다.
-     * @param  {String} name 보드의 이름
+     * enable Board with the given name.
+     * @param  {String} name the name of Board
      * @return {boardManager}
      */
     BoardManager.prototype.enable = function(name) {
@@ -545,9 +529,8 @@ define("pwge/boardManager", ["util/ObjectPool", "pwge/board", "pwge/util"], func
     };
 
     /**
-     * Board를 disable시킨다.
-     * disable된 board는 renderer에 의해 재생되지 않는다.
-     * @param  {String} name 보드의 이름
+     * disable Board with the given name.
+     * @param  {String} name the name of Board
      * @return {boardManager}
      */
     BoardManager.prototype.disable = function(name) {
