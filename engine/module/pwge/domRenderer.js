@@ -1,22 +1,26 @@
 define("pwge/domRenderer", ["pwge/util", "util/PubSub"], function(util, PubSub){
     /**
-     * domRenderer 모듈
-     * DOMRenderer 객체를 생성한다.
-     * DOM Renderer는 Entity가 Canvas가 아닌 rendering back-end가 DOM일 경우
+     * DOMRenderer module
+     * DOMRenderer is to render a set of entities via bounded DOM elements, not into <canvas>.
+     * DOMRenderer module maintain a set of bounded DOM element and RenderingContext for each entity
+     * that is desiginated to use DOMRenderer for rendering
+     * Implementation-wise, by rendering, it means that the DOM element is transformed by CSS 3D transform.
+     * For more detail to understand DOMRender, please see the user programming guide.
+     * construct DOMRenderer object.
      * @class
-     * @param {Object} options 옵션 객체.
+     * @param {String} class selector that can be used by getElementsByClassName.
+     * @param {Number} width scale factor (canvas.width to canvas.style.width ratio).
+     * @param {Number} hiehgt scale factor (canvas.height to canvas.style.height ratio).
      * @exports pwge/DOMRenderer
-     * @requires util/util
-     * @requires util/PubSub
      * @example
-     * var newDOMRenderer =new DOMRenderer(options);
+     * var newDOMRenderer =new DOMRenderer(classSelector, xScale, yScale);
      */
     var DOMRenderer = function( selector, xScale, yScale ){
         this.nodes = [];//references to DOM nodes
         this.container = null;//container node selector
-        this.selector = selector;//DOM node selector로 class selector
-        this.xScale = xScale; //canvas.width to canvas.style.width ratio
-        this.yScale = yScale; //canvas.height to canvas.style.height ratio
+        this.selector = selector;
+        this.xScale = xScale;
+        this.yScale = yScale;
 
         this._init();
     };
@@ -29,7 +33,7 @@ define("pwge/domRenderer", ["pwge/util", "util/PubSub"], function(util, PubSub){
             console.log("invalid selctor");
             return;
         }
-        //node list에 DOMRenderingContext를 생성하여 등록
+        //create DOMRenderingcontext for all entities in this.nodes
         for( i=0; i < len; i++ ){
             this.nodes.push( new DOMRenderingContext( tmp[i], this ) );
         }
@@ -46,7 +50,7 @@ define("pwge/domRenderer", ["pwge/util", "util/PubSub"], function(util, PubSub){
             return;
         }
         if( !!prop ){
-            //해당 prop을 갖는 node를 찾아서 return
+            //find and return the pre-exisiting node containg prop if exist for better performance
             var i,
                 nodes = this.nodes,
                 len = nodes.length;
@@ -59,7 +63,7 @@ define("pwge/domRenderer", ["pwge/util", "util/PubSub"], function(util, PubSub){
             }
         }
 
-        //주어진 prop 갖는 노드를 찾는 것을 실패 했거나 prop가 없는 경우에는 해당 prop을 node에 설정해서 pop해서 전달
+        //if miss, create a node with the prop and then return it
         this.nodes[len-1].refDOMNode.classList.add(prop);
         this.nodes[len-1].classList.push(prop);
         return this.nodes.pop();
@@ -113,7 +117,7 @@ define("pwge/domRenderer", ["pwge/util", "util/PubSub"], function(util, PubSub){
 
         var node = this.refDOMNode;
         if(hardReset){
-            //prop을 제거해서 Texture를 완전히 reset
+            //hard reset node by removing texture/image
             this.classList.forEach(function(element, index, array){
                 node.classList.remove(element);
                 return true;
@@ -150,7 +154,6 @@ define("pwge/domRenderer", ["pwge/util", "util/PubSub"], function(util, PubSub){
     };
 
     DOMRenderingContext.prototype.hide = function( ){
-        // this.refDOMNode.style.display = "none";
         this.refDOMNode.style.cssText = defaultTransformStyle;
     };
 
