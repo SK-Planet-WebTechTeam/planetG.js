@@ -1,11 +1,12 @@
 define("pwge/entity", ["pwge/spriteManager", "pwge/util", "util/PubSub", "util/easing"], function(spriteManager, util, PubSub, easing){
     /**
-     * entity 모듈
-     * Entity 객체를 생성한다.
-     * Entity 객체는 직접생성하여 쓰기보다 util/ObjectPool로 관리하여 ObjectPool.allocate() 메서드로 할당해 사용하는게 좋다.
-     * Board에 추가될 객체의 위치와 크기에 대한 값을 가진다.
+     * entity module
+     * construct an Entity object.
+     * An Entity represent one drawable object by canvas with a sprite image or DOMRenderer.
+     * It should be created and reclaimned by util/ObjectPool (object pool for supressing garbage collector).
+     * Every Entity pertains to a Board which manage the position and size of the Entity.
      * @class
-     * @param {Object} options 옵션 객체.
+     * @param {Object} options option object.
      * @exports pwge/entity
      * @requires util/util
      * @requires util/PubSub
@@ -56,7 +57,6 @@ define("pwge/entity", ["pwge/spriteManager", "pwge/util", "util/PubSub", "util/e
         for (i = 0, len = this._stepProps.length; i < len; i++) {
             this._lastStep[this._stepProps[i]] = this[this._stepProps[i]];
         }
-        // console.log(this._lastStep)
     };
     Entity.prototype._setLastDraw = function(){
         var i, len;
@@ -68,10 +68,10 @@ define("pwge/entity", ["pwge/spriteManager", "pwge/util", "util/PubSub", "util/e
         var i, len;
 
         if (!this._drawImageData) {
-            this._drawImageData = {}; //draw때 적용될 이미지의 데이터
+            this._drawImageData = {}; //image data to be used on drawing
         }
         if(!this._prevDrawImageData){
-            this._prevDrawImageData = {}; //이전 frame의 draw 상태를 저장
+            this._prevDrawImageData = {}; //draw status of a previous frame
         }
         if (!this._lastStep) {
             this._lastStep = {}; //step
@@ -129,9 +129,9 @@ define("pwge/entity", ["pwge/spriteManager", "pwge/util", "util/PubSub", "util/e
     };
 
     /**
-     * Board에 의해 호출되어, Entitiy들의 위치, 크기값을 계산한다.
-     * 기본적으로 animation을 적용하여 x, y, width, height 값을 계산하고, 필요시 오버라이딩하여 사용한다.
-     * @param  {String} dt 렌더러의 타임라인 진행시간
+     * Board calls its Entity.step() for calculating x, y, width, height.
+     * Entity.step() is expected to be overidden by game app's own step() method.
+     * @param  {String} dt timeline progress
      */
     Entity.prototype.step = function(dt) {
         if (this.animation) {
@@ -144,8 +144,8 @@ define("pwge/entity", ["pwge/spriteManager", "pwge/util", "util/PubSub", "util/e
                 if (typeof this.animation.callback === "function") {
                     fn = this.animation.callback;
                 }
-                this.animation = null; //callback 내부에서 animate()를 실행하여 문제가 될 수 있기때문에 this.animation을 null로 바꿔주고 콜백을 실행
-
+                //To prevent animate() from being called in a callback, set this.animation to null
+                this.animation = null;
                 if (fn) {
                     fn.call(this);
                 }
@@ -154,9 +154,9 @@ define("pwge/entity", ["pwge/spriteManager", "pwge/util", "util/PubSub", "util/e
     };
 
     /**
-     * Board에 의해 호출되어, step메서드에 의해 결정된 x, y, width, height값을 토대로 entity를 화면에 그린다.
-     * 기본적으로 sprite를 적용하게 되며, 필요시 오버라이딩하여 사용한다.
-     * @param  {String} dt 렌더러의 타임라인 진행시간
+     * Board calls its Entity.draw() to draw Entity onto frame buffer (canvas or DOM)
+     * By default, it assume sprite image. You can override this method for your own implementation
+     * @param  {String} dt timeline progress
      */
     Entity.prototype.draw = function(dt) {
         if (this.sprite) {
@@ -216,13 +216,11 @@ define("pwge/entity", ["pwge/spriteManager", "pwge/util", "util/PubSub", "util/e
     };
 
     Entity.prototype._updateInvalidatedRegion = function(invalidatedRects) {
-        // var invalidatedRects = this.owner.invalidatedRects;
         if(invalidatedRects.length < 1 || this.owner._bgInit ){
             this.owner._bgInit = false;
             return this._flush();
         }
 
-        // this._setLastStep();
         var data,
             temp_image,
             renderRatio = this._objectPool._owner.viewport.renderRatio,
@@ -235,7 +233,7 @@ define("pwge/entity", ["pwge/spriteManager", "pwge/util", "util/PubSub", "util/e
         for(i=0; i<invalidatedRects.length; i++){
             data = invalidatedRects[i];
             temp_image = data.image;
-            data.image = this._drawImageData.image;//image source는 모두 배경 이미지로 바꾸자
+            data.image = this._drawImageData.image;
             ctxChanged = false;
 
             if (data.image && data.sw > 0 && data.sh > 0) {
@@ -256,7 +254,6 @@ define("pwge/entity", ["pwge/spriteManager", "pwge/util", "util/PubSub", "util/e
                 if (ctxChanged) {
                     context.restore();
                 }
-                // this._setLastDraw();
             }
 
             data.image = temp_image;
@@ -288,7 +285,7 @@ define("pwge/entity", ["pwge/spriteManager", "pwge/util", "util/PubSub", "util/e
                 context.translate(-x, -y);
             }
             if(!!this.domRendering) {
-                //domRenderer로 본 Entity를 rendering 하는 경우
+                //when this Entity is bound to DOMRender
                 var renderer = this.domRenderer,
                     ws,
                     hs;
@@ -310,7 +307,7 @@ define("pwge/entity", ["pwge/spriteManager", "pwge/util", "util/PubSub", "util/e
                 tmp += 'scale('+ ws + "," + hs + ')';
                 this.domRenderer.draw( tmp );
             } else {
-                //canvas로 rendering 하는 경우
+                //when this Entity is rendered onto <canvas>
                 context.drawImage(data.image, data.sx, data.sy, data.sw, data.sh, data.dx, data.dy, data.dw, data.dh);
             }
             if (ctxChanged) {
@@ -321,8 +318,8 @@ define("pwge/entity", ["pwge/spriteManager", "pwge/util", "util/PubSub", "util/e
     };
 
     /**
-     * Entity를 Board에 추가한다.
-     * @param {String} boardName Board의 이름
+     * add Entity to Board.
+     * @param {String} boardName the name of Board
      * @return {Entity}
      */
     Entity.prototype.addTo = function(boardName) {
@@ -332,8 +329,8 @@ define("pwge/entity", ["pwge/spriteManager", "pwge/util", "util/PubSub", "util/e
     };
 
     /**
-     * Entity가 렌더링되도록 enable 시킨다.
-     * enable된 상태에서만 렌더러에 의해 step, draw 메서드가 호출된다.
+     * Enable Entity to be rendered.
+     * Only when it is enable, step() and draw for this Entity will be called
      * @return {Entity}
      */
     Entity.prototype.enable = function() {
@@ -342,8 +339,7 @@ define("pwge/entity", ["pwge/spriteManager", "pwge/util", "util/PubSub", "util/e
     };
 
     /**
-     * Entity가 렌더링되지 않도록 disable 시킨다.
-     * disable된 상태에서는 렌더러에 의해 step, draw 메서드가 호출되지 않는다.
+     * Disable Entity not to be rendered.
      * @return {Entity}
      */
     Entity.prototype.disable = function(name) {
@@ -353,8 +349,8 @@ define("pwge/entity", ["pwge/spriteManager", "pwge/util", "util/PubSub", "util/e
 
     /**
      * TODO
-     * Entity의 크기를 확대축소한다.
-     * @param {Number} ratio 확배배율
+     * resize the size of Entity
+     * @param {Number} resize ratio
      * @return {Entity}
      */
     Entity.prototype.scale = function(ratio, corner) {
@@ -364,7 +360,7 @@ define("pwge/entity", ["pwge/spriteManager", "pwge/util", "util/PubSub", "util/e
     };
 
     /**
-     * Entity가 포함된 Board를 구한다.
+     * Return Board that containing Entity.
      * @return {Board | Null}
      */
     Entity.prototype.getOwnerBoard = function() {
@@ -372,9 +368,9 @@ define("pwge/entity", ["pwge/spriteManager", "pwge/util", "util/PubSub", "util/e
     };
 
     /**
-     * Entity에 기본으로 적용될 Sprite를 지정한다.
-     * @param {String} spriteName Sprite 이름
-     * @param  {Number} startTime  적용이 시작될 시간
+     * Set a default spriate image to Entity
+     * @param {String} spriteName the name of sprite image
+     * @param  {Number} startTime  the start time
      * @return {Entity}
      */
     Entity.prototype.setBaseSprite = function(spriteName, startTime) {
@@ -388,8 +384,8 @@ define("pwge/entity", ["pwge/spriteManager", "pwge/util", "util/PubSub", "util/e
     };
 
     /**
-     * Entitiy에 적용될 이미지를 지정한다.
-     * draw를 인스턴스메서드로 지정하기 때문에 한번 설정된 이후에는 Sprite가 적용되지 않는다.
+     * Set a default image to Entity
+     * It cannot be used together with setBaseSprite() at the same time
      * @param {HTMLImageElement} image
      */
     Entity.prototype.setBaseImage = function(image) {
@@ -398,10 +394,10 @@ define("pwge/entity", ["pwge/spriteManager", "pwge/util", "util/PubSub", "util/e
     };
 
     /**
-     * Entity에 일시적으로 적용할 Sprite를 지정한다.
-     * 적용된 후(Sprite의 duration + sleep 이후)에는 다시 기본 Sprite가 적용된다.
-     * @param {String} spriteName Sprite 이름
-     * @param  {Number} startTime  적용이 시작될 시간
+     * Set an one-time sprite image.
+     * After being rendered with the sprite image, the default sprite image will be used again from the next draw()
+     * @param {String} spriteName the name of Sprite
+     * @param  {Number} startTime  the start time
      * @return {Entity}
      */
     Entity.prototype.applySprite = function(spriteName, startTime) {
@@ -418,10 +414,9 @@ define("pwge/entity", ["pwge/spriteManager", "pwge/util", "util/PubSub", "util/e
     };
 
     /**
-     * Entity에 일시적으로 적용할 Animation을 지정한다.
-     * Animation의 duration 기간동안만 적용된다.
-     * @param {Object | String} animation Animation 객체
-     * @param  {Number} startTime  적용이 시작될 시간
+     * Set a temporary animation to Entity
+     * @param {Object | String} animation Animation object
+     * @param  {Number} startTime  start time
      * @return {Entity}
      */
     Entity.prototype.animate = function(animation, startTime) {
@@ -452,15 +447,14 @@ define("pwge/entity", ["pwge/spriteManager", "pwge/util", "util/PubSub", "util/e
     };
 
     /**
-     * Entity를 삭제한다.
-     * 삭제된 후에는 다시 객체 풀에 반환된다.
+     * Delete Entity and then return it into ObjectPool
      */
     Entity.prototype.destroy = function() {
         if (!!this.domRenderer) {
             this.domRenderer.owner.returnRendererNode(this.domRenderer);
         }
         if (this.owner) {
-            //invalidate 되야 될 영역이 있다면 먼저 board manager의 invalidatedRects에 등록 하여준다
+            //When DOMRender is enabled, the invalidated rectangle of this Entity is added into Board.
             var bm = this.owner.getBoardManager();
             bm.invalidatedRects.push(this.getInvalidatedRect());
             this.owner.removeEntity(this);
