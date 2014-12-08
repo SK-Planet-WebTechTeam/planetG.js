@@ -1,6 +1,6 @@
 define("pwge/debug", function(){
     /**
-     * debug 모듈
+     * debug module
      * @exports pwge/debug
      */
     var Debug = function(owner){
@@ -32,7 +32,7 @@ define("pwge/debug", function(){
     };
 
     /**
-     * fps meter가 표시되는 엘리먼트를 구한다.
+     * get the element to display fps meter.
      * @return {HTMLSpanElement}
      */
     Debug.prototype.getFPSElement = function() {
@@ -43,7 +43,7 @@ define("pwge/debug", function(){
     };
 
     /**
-     * fps meter 표시를 시작한다.
+     * start fps meter.
      * @return {Debug}
      */
     Debug.prototype.start = function() {
@@ -58,7 +58,7 @@ define("pwge/debug", function(){
     };
 
     /**
-     * fps meter 표시를 멈춘다.
+     * stop fps meter.
      * @return {Debug}
      */
     Debug.prototype.stop = function() {
