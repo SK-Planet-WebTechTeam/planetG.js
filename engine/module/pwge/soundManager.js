@@ -1,6 +1,6 @@
 define("pwge/soundManager", ["pwge/runtime", "pwge/util"], function(runtime, util) {
     /**
-     * soundManager 모듈
+     * soundManager module
      * @exports pwge/soundManager
      * @requires pwge/runtime
      */
@@ -14,10 +14,10 @@ define("pwge/soundManager", ["pwge/runtime", "pwge/util"], function(runtime, uti
         audioContext = soundManager.audioContext = (runtime.AudioContext) ? new runtime.AudioContext() : undefined;
 
     /**
-     * 이름을 지정하여, 로딩된 <audio> 태그로 음악을 설정한다.
-     * @param {String} name   음악의 이름
-     * @param {HTMLAudioElement} source <audio> 태그
-     * @param {Object} options 음악 재생 옵션
+     * set a loaded <audio> source to a music map.
+     * @param {String} name the name of music
+     * @param {HTMLAudioElement} source <audio> tag
+     * @param {Object} options music playback option
      * @return {soundManager}
      */
     soundManager.setMusic = function(name, source, options) {
@@ -30,8 +30,8 @@ define("pwge/soundManager", ["pwge/runtime", "pwge/util"], function(runtime, uti
     };
 
     /**
-     * 음악을 이름으로 불러온다.
-     * @param {String} name   음악의 이름
+     * get music by name.
+     * @param {String} name the name of music
      * @return {HTMLAudioElement}
      */
     soundManager.getMusic = function(name) {
@@ -39,9 +39,9 @@ define("pwge/soundManager", ["pwge/runtime", "pwge/util"], function(runtime, uti
     };
 
     /**
-     * 음악을 재생한다.
-     * @param {String} name   음악의 이름
-     * @param {Object} options  재생 옵션
+     * play music
+     * @param {String} name the name of music
+     * @param {Object} options  playback option
      * @return {soundManager}
      */
     soundManager.playMusic = function(name, options) {
@@ -60,7 +60,7 @@ define("pwge/soundManager", ["pwge/runtime", "pwge/util"], function(runtime, uti
     };
 
     /**
-     * 음악재생을 중단한다.
+     * stop playing a music.
      * @return {soundManager}
      */
     soundManager.stopMusic = function() {
@@ -72,10 +72,10 @@ define("pwge/soundManager", ["pwge/runtime", "pwge/util"], function(runtime, uti
     };
 
     /**
-     * 이름을 지정하여, 로딩된 ArrayBuffer로 효과음을 설정한다.
-     * @param {String} name   효과음의 이름
+     * set a sound effect by a given name.
+     * @param {String} name the name of sound effect
      * @param {ArrayBuffer} source ArrayBuffer
-     * @param {Object} options 효과음 재생 옵션
+     * @param {Object} options sound effect playback option
      * @return {soundManager}
      */
     soundManager.setSound = function(name, source, options) {
@@ -89,8 +89,8 @@ define("pwge/soundManager", ["pwge/runtime", "pwge/util"], function(runtime, uti
     };
 
     /**
-     * 효과음을 이름으로 불러온다.
-     * @param {String} name   효과음의 이름
+     * get sound effect object by a given name.
+     * @param {String} name the name of sound effect
      * @return {ArrayBuffer}
      */
     soundManager.getSound = function(name) {
@@ -98,9 +98,9 @@ define("pwge/soundManager", ["pwge/runtime", "pwge/util"], function(runtime, uti
     };
 
     /**
-     * 효과음을 재생한다.
-     * @param {String} name   효과음의 이름
-     * @param {Object} options  재생 옵션
+     * play sound effect.
+     * @param {String} name the name of sound effect
+     * @param {Object} options  playback option
      * @return {soundManager}
      */
     soundManager.playSound = function(name, options) {

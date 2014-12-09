@@ -1,6 +1,6 @@
 define("pwge/runtime", function() {
     /**
-     * runtime 모듈
+     * runtime module
      * @exports pwge/runtime
      */
     var runtime = {};
@@ -15,13 +15,13 @@ define("pwge/runtime", function() {
                                 context.backingStorePixelRatio || 1;
 
         /**
-         * devicePixelRatio 값
+         * devicePixelRatio value
          * @type {Number}
          */
         this.devicePixelRatio = devicePixelRatio;
 
         /**
-         * Canvas context의 backingStorePixelRatio
+         * backingStorePixelRatio of Canvas context
          * @type {Number}
          */
         this.backingStorePixelRatio = backingStoreRatio;
@@ -33,26 +33,26 @@ define("pwge/runtime", function() {
         this.pixelRatio = devicePixelRatio / backingStoreRatio;
 
         /**
-         * planetWebview 적용여부
+         * on/off indicator of planetWebview (SK planet internal acceleration engine)
          * @type {Boolean}
          */
         this.planetWebview = (typeof context.flush === "function");
     }).call(runtime, document.createElement("canvas"));
 
     /**
-     * ECMAScript5의 Object.defineProperty의 지원여부
+     * check if Object.defineProperty is supported
      * @type {Boolean}
      */
     runtime.defineProperty = (typeof Object.defineProperty === "function");
 
     /**
-     * HTMLAudioElement 지원여부
+     * check if HTMLAudioElement is supported
      * @type {Boolean}
      */
     runtime.HTMLAudioElement = window.HTMLAudioElement || false;
 
     /**
-     * AudioContext 지원여부
+     * check if AudioContext is supported
      * @type {Boolean}
      */
     runtime.AudioContext = window.AudioContext || window.webkitAudioContext || false;

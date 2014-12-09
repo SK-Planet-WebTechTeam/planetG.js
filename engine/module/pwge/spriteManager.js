@@ -1,8 +1,8 @@
 define("pwge/spriteManager", ["pwge/canvas", "util/easing", "pwge/util"], function(canvas, easing, util){
     var spriteMap = {},
         /**
-         * sprite 모듈
-         * <br>Entity에 적용될 이미지나 스프라이트애니메이션을 설정한다.
+         * sprite module
+         * manages a image or sprite image for Entity
          * @exports pwge/spriteManager
          * @requires pwge/canvas
          * @requires pwge/easing
@@ -12,12 +12,13 @@ define("pwge/spriteManager", ["pwge/canvas", "util/easing", "pwge/util"], functi
         Sprite;
 
     /**
-     * Sprite 객체
-     * 직접생성하여 쓰지 않고 spriteManager 모듈을 통해 사용한다.
+     * Sprite module
+     * should not be direclty accessed by an application,
+     * but should be accessed through a spriteManager module
      * @class
-     * @param  {String} name 이름
-     * @param  {HTMLImageElement} image 스프라이트 이미지 엘리먼트
-     * @param  {Object} options 설정옵션객체
+     * @param  {String} name the name of Sprite
+     * @param  {HTMLImageElement} image sprite image element
+     * @param  {Object} options option
      *
      * @example
      * spriteManager.set(name, image, options);
@@ -58,7 +59,7 @@ define("pwge/spriteManager", ["pwge/canvas", "util/easing", "pwge/util"], functi
 
     /**
      * @private
-     * @param  {Number} dt 타임라인 진행시간
+     * @param  {Number} dt timeline progress in msec
      */
     Sprite.prototype.draw = function(dt) {
         var image = this.sprite.image,
@@ -75,8 +76,8 @@ define("pwge/spriteManager", ["pwge/canvas", "util/easing", "pwge/util"], functi
     };
 
     /**
-     * 스프라이트의 특정 프레임을 image로 불러온다.
-     * @param  {Number} frameNo 프레임 번호 (0~)
+     * get a specified frame as a image out of a sprite image
+     * @param  {Number} frameNo the frame number (0~)
      * @return {HTMLCanvasElement}
      * @example
      * entityPool.allocate({
@@ -116,8 +117,8 @@ define("pwge/spriteManager", ["pwge/canvas", "util/easing", "pwge/util"], functi
     };
 
     /**
-     * Sprite 객체를 가져온다.
-     * @param  {String} name 이름
+     * get Sprite from spriteMap by name.
+     * @param  {String} name the name of Sprite
      * @return {Object}
      */
     spriteManager.get = function(name) {
@@ -125,13 +126,12 @@ define("pwge/spriteManager", ["pwge/canvas", "util/easing", "pwge/util"], functi
     };
 
     /**
-     * Sprite 객체를 생성하여 설정한다.
-     * @param  {String} name 이름
-     * @param  {HTMLImageElement} image 스프라이트 이미지 엘리먼트
-     * @param  {Object} options 설정옵션객체. 애니메이션이 없는 고정 이미지인경우 생략가능하다.
+     * create a Sprite, then initialize it.
+     * @param  {String} name the name of Sprite
+     * @param  {HTMLImageElement} image the image element of Sprite
+     * @param  {Object} options option object
      * @return {sprite}
      * @example
-     * //애니메이션이 없는 한장의 이미지를 엔티티에 적용하는 예제
      * spriteManager.set("imageName", image);
      * entityPool.allocate({
      *     x : 50,
