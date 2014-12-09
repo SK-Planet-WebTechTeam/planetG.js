@@ -15,6 +15,10 @@ Major Features
 - multi-resolution support for various devicePixelRatio handling
 - general game engine feature including sound (WebAudio/Audio tag), Sprite Animation, etc
 
+Roadmap (2.0)
+- WebGL back-end for better performance on Android L and iOS8
+- support to load mixed resolution resources
+
 Example Games (Coming Soon)
 - Flappy ball
 - Piano tiles
