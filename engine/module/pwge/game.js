@@ -1,6 +1,6 @@
 define("pwge/game", ["pwge/runtime", "pwge/config", "pwge/canvas", "pwge/input", "pwge/loader", 'pwge/spriteManager', 'pwge/soundManager', 'pwge/boardManager', 'pwge/renderer', 'pwge/entity', "pwge/util", "util/PubSub", "util/ObjectPool", "pwge/domRenderer"], function(runtime, config, Canvas, Input, loader, spriteManager, soundManager, BoardManager, Renderer, Entity, util, PubSub, ObjectPool, DOMRenderer){
     /**
-     * game 모듈
+     * game module
      * @exports pwge/game
      * @requires pwge/runtime
      * @requires pwge/config

@@ -1,6 +1,6 @@
 define("pwge/input", ["util/PubSub"], function(PubSub) {
     /**
-     * input 모듈
+     * input module
      * @exports pwge/input
      * @extends util/PubSub
      * @requires pwge/canvas

@@ -1,7 +1,7 @@
 define("pwge/loader", ["pwge/runtime", "pwge/soundManager", "pwge/util"], function(runtime, soundManager, util){
     var resourceMap = {},
         /**
-         * loader 모듈
+         * loader module
          * @exports pwge/loader
          * @requires pwge/runtime
          */
@@ -66,16 +66,16 @@ define("pwge/loader", ["pwge/runtime", "pwge/soundManager", "pwge/util"], functi
         };
 
     /**
-     * 이미지를 로드한다.
-     * @param {Object} 로드할 이미지 정보
+     * load images.
+     * @param {Object} image description object  to be loaded
      * @returm {Promise}
      * @example
-loader.loadImages({
-    "bg1" : "./images/bg_01.png",
-    "bg2" : "./images/bg_02.png"
-}).then(function(images){
-    console.log(images);
-});
+        loader.loadImages({
+            "bg1" : "./images/bg_01.png",
+            "bg2" : "./images/bg_02.png"
+        }).then(function(images){
+            console.log(images);
+        });
      */
     loader.loadImages = function(obj) {
         var result = {};
@@ -91,17 +91,16 @@ loader.loadImages({
     };
 
     /**
-     * 음악를 로드한다.
-     * 로딩된 음악은 <audio> 태그로 재생되며, 하나의 음악만 재생이 가능하다.
-     * @param {Object} 로드할 음악 정보
+     * load musics via <audio>.
+     * @param {Object} music description object to be loaded
      * @returm {Promise}
      * @example
-loader.loadMusics({
-    "bg1" : "./musics/bg_01.mp3",
-    "bg2" : "./musics/bg_02.ogg"
-}).then(function(musics){
-    console.log(musics);
-});
+        loader.loadMusics({
+            "bg1" : "./musics/bg_01.mp3",
+            "bg2" : "./musics/bg_02.ogg"
+        }).then(function(musics){
+            console.log(musics);
+        });
      */
     loader.loadMusics = function(obj) {
         var result = {};
@@ -119,17 +118,18 @@ loader.loadMusics({
     };
 
     /**
-     * 효과음을 로드한다.
+     * load sound effect via WebAudio.
+     * loaded sound is played by AudioContext, and sound mixing is also supported as per WebAudio spec.
      * 로딩된 효과음은 AudioContext를 이용해 재생되며, 동시에 여러개의 효과음을 재생할 수 있다.
-     * @param {Object} 로드할 효과음 정보
+     * @param {Object} sound description object to be loaded.
      * @returm {Promise}
      * @example
-loader.loadSounds({
-    "fx1" : "./fxs/fx_01.mp3",
-    "fx2" : "./fxs/fx_02.mp3"
-}).then(function(sounds){
-    console.log(sounds);
-});
+        loader.loadSounds({
+            "fx1" : "./fxs/fx_01.mp3",
+            "fx2" : "./fxs/fx_02.mp3"
+        }).then(function(sounds){
+            console.log(sounds);
+        });
      */
     loader.loadSounds = function(obj) {
         var result = {};
@@ -145,56 +145,54 @@ loader.loadSounds({
     };
 
     /**
-     * 여러 종류의 리소스를 한꺼번에 로드한다.
-     * 로딩된 리소스는 지정된 이름으로 spriteManager/soundManager를 통해 자동 설정된다.
-     * @param {Object} resourceMap 로드할 리소스 정보
+     * load a multiple types of resources together.
+     * @param {Object} resourceMap resource description object to be loaded.
      * @returm {Promise}
      * @example
-loader.loadResources({
-    musics : {
-        "bg1" : "./musics/bg_01.mp3",
-        "bg2" : "./musics/bg_02.ogg"
-    },
-    sounds : {
-        "fx1" : "./fxs/fx_01.mp3",
-        "fx2" : "./fxs/fx_02.mp3"
-    }
-}).then(function(){
-    console.log(soundManager.get("fx1"));
-});
+        loader.loadResources({
+            musics : {
+                "bg1" : "./musics/bg_01.mp3",
+                "bg2" : "./musics/bg_02.ogg"
+            },
+            sounds : {
+                "fx1" : "./fxs/fx_01.mp3",
+                "fx2" : "./fxs/fx_02.mp3"
+            }
+        }).then(function(){
+            console.log(soundManager.get("fx1"));
+        });
      *
      * @example
-@example
-loader.loadResources({
-    images : {
-        "bg1" : "./images/bg_01.png",
-        "sp1" : "./images/sp_01.png"
-    },
-    spriteInfo : {
-        "sprite1" : { //스프라이트 이름 : 스프라이트 정보
-            image : "sp1", //로딩된 이미지 이름
-            x : 0,
-            y : 0
-            width : 45,
-            height : 45,
-            frames : 6,
-            loop : true,
-            duration : 1000,
-            order : [0,1,2,3,4,5],
-            easing : "linear"
-        }
-    }
-    musics : {
-        "bg1" : "./musics/bg_01.mp3",
-        "bg2" : "./musics/bg_02.ogg"
-    },
-    sounds : {
-        "fx1" : "./fxs/fx_01.mp3",
-        "fx2" : "./fxs/fx_02.mp3"
-    }
-}).then(function(){
-    console.log(spriteManager.get("sprite1"));
-});
+        loader.loadResources({
+            images : {
+                "bg1" : "./images/bg_01.png",
+                "sp1" : "./images/sp_01.png"
+            },
+            spriteInfo : {
+                "sprite1" : { //sprite name
+                    image : "sp1", //the name of the loaded image
+                    x : 0,
+                    y : 0
+                    width : 45,
+                    height : 45,
+                    frames : 6,
+                    loop : true,
+                    duration : 1000,
+                    order : [0,1,2,3,4,5],
+                    easing : "linear"
+                }
+            }
+            musics : {
+                "bg1" : "./musics/bg_01.mp3",
+                "bg2" : "./musics/bg_02.ogg"
+            },
+            sounds : {
+                "fx1" : "./fxs/fx_01.mp3",
+                "fx2" : "./fxs/fx_02.mp3"
+            }
+        }).then(function(){
+            console.log(spriteManager.get("sprite1"));
+        });
      */
     loader.loadResources = function(resourceMap) {
         var promises = [],
@@ -258,10 +256,8 @@ loader.loadResources({
             promises.push(loader.loadSounds(resourceMap.sounds).then(function(sounds){
                 Object.keys(sounds).forEach(function(key){
                     if (resourceMap.soundInfo && resourceMap.soundInfo[key]) {
-                        // alert("info")
                         loader._owner.soundManager.setSound(key, sounds[key], resourceMap.soundInfo[key]);
                     } else {
-                        // alert("no info")
                         loader._owner.soundManager.setSound(key, sounds[key]);
                     }
                 });
@@ -272,9 +268,9 @@ loader.loadResources({
     };
 
     /**
-     * 로드된 리소스를 불러온다.
-     * @param  {String} url 불러올 리소스의 url
-     * @return {HTMLImageElement | HTMLAudioElement | ArrayBuffer} 이미지 엘리먼트, 오디오 엘리먼트, 또는 오디오 ArrayBuffer
+     * return the loaded resource.
+     * @param  {String} url the URL of a resource to access
+     * @return {HTMLImageElement | HTMLAudioElement | ArrayBuffer} image element, audio element, or audio array buffer.
      */
     loader.get = function(url) {
         return resourceMap[encodeURIComponent(url)] || null;
