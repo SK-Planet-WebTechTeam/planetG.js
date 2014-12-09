@@ -1,9 +1,9 @@
 define("util/ObjectPool", function(){
     /**
-     * util/ObjectPool 객체 풀 모듈
+     * util/ObjectPool object pool module
      * @exports util/ObjectPool
-     * @param {Function} ConstructorFunction 생성자 함수
-     * @param {Number} expandCount    객체 풀에 생성해 놓을 객체의 개수
+     * @param {Function} ConstructorFunction constructor funtion
+     * @param {Number} expandCount    initial object pool size
      */
     var ObjectPool = function(ConstructorFunction, expandCount){
         this._ConstructorFunction = ConstructorFunction;
@@ -21,9 +21,9 @@ define("util/ObjectPool", function(){
     };
 
     /**
-     * 객체 풀에서 객체를 하나 가져온다.
+     * get one object from a pool
      * @method
-     * @return {Object} 객체
+     * @return {Object} object
      */
     ObjectPool.prototype.allocate = function() {
         var obj;
@@ -46,7 +46,7 @@ define("util/ObjectPool", function(){
     };
 
     /**
-     * 객체를 다시 풀로 되돌려서 사용가능한 상태로 만든다.
+     * return an object to pool.
      * @param  {Object} obj 반환할 객체
      * @return {ObjectPool}
      */
@@ -61,7 +61,7 @@ define("util/ObjectPool", function(){
     };
 
     /**
-     * 객체를 초기화시킨다.
+     * reset an object by calling its constructor function.
      * @param  {Object} obj 반환할 객체
      * @return {Object} 초기화된 객체
      */
@@ -78,8 +78,8 @@ define("util/ObjectPool", function(){
     };
 
     /**
-     * 객체 풀을 확장한다.
-     * @param  {Number} n 객체 풀에 확장하여 할당해 놓을 객체의 개수
+     * expand the size of an object pool.
+     * @param  {Number} n the number of objects in the pool
      * @return {ObjectPool}
      */
     ObjectPool.prototype.expand = function(n) {
@@ -95,7 +95,7 @@ define("util/ObjectPool", function(){
     };
 
     /**
-     * 내부 통계 변수를 초기화
+     * reset internal variables.
      * @param {Number} 초기 할당된 객체 개수
      */
     ObjectPool.prototype._clearMetrics = function(allocated) {
