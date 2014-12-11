@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+<title>Flappy Ball</title>
+<link rel="stylesheet" href="css/default.css">
+</head>
+<body>
+<main>
+    <!-- Score board -->
+    <section class="point point-all">
+        <h3>Score &amp; Game Chance</h3>
+        <dl>
+            <dt>Best Score</dt>
+            <dd>
+                <b id="maxScore1" class="n0">0</b>
+                <b id="maxScore2" class="n0">0</b>
+                <b id="maxScore3" class="n0">0</b>
+            </dd>
+            <dt>Current Score</dt>
+            <dd>
+                <b id="currentScore1" class="n0"></b>
+                <b id="currentScore2" class="n0"></b>
+                <b id="currentScore3" class="n0"></b>
+            </dd>
+            <dt>My Game Chance</dt>
+            <dd>
+                <i id="gameCount1" class="n0">0</i>
+                <i id="gameCount2" class="n0">0</i>
+                <i id="gameCount3" class="n0">0</i>
+            </dd>
+        </dl>
+    </section>
+
+    <section class="gameCanvas">
+
+        <!-- div for DOM Rendering -->
+        <div class='rendererDOM'></div>
+        <div class="rendererDOM"></div>
+        <div class="rendererDOM"></div>
+        <div class="rendererDOM"></div>
+        <div class="rendererDOM"></div>
+        <div class="rendererDOM"></div>
+        <div class="rendererDOM"></div>
+        <div class="rendererDOM"></div>
+        <div class="rendererDOM"></div>
+        <div class="rendererDOM"></div>
+        <div class="rendererDOM"></div>
+        <div class="rendererDOM"></div>
+
+        <!-- Canvas for Game Rendering -->
+        <canvas id="gameCanvas" class="game _gameCanvas" style="display:block;margin:0;"></canvas>
+    </section>
+</main>
+
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="../../engine/lib/polyfill.js"></script>
+<script src="../../engine/lib/promise-0.1.1.js"></script>
+<script src="../../engine/lib/require.js" data-main="js/apigame.js?709172304102"></script>
+</body>
+</html>
