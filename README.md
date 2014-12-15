@@ -24,6 +24,7 @@ Roadmap (2.0)
 - Entity level event binding
 - V8/Jit friendly engine refactoring
 - Garbage collector improvement (in an effort to suppress GC almost completely)
+- Online DPI/canvas-aware optimized image generation
 
 Example Games (Coming Soon)
 - Flappy ball
