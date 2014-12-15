@@ -22,6 +22,8 @@ Roadmap (2.0)
 - Physics Engine integration (Box2D, physicsJs)
 - Smart repaint algorithm improvement (invalidated region merge, Board-level support)
 - Entity level event binding
+- V8/Jit friendly engine refactoring
+- Garbage collector improvement (in an effort to suppress GC almost completely)
 
 Example Games (Coming Soon)
 - Flappy ball
