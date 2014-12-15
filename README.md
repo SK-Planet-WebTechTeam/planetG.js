@@ -18,6 +18,9 @@ Major Features
 Roadmap (2.0)
 - WebGL back-end for better performance on Android L and iOS8
 - support to load mixed resolution resources
+- WebWorker integration
+- Physics Engine integration (Box2D, physicsJs)
+- Smart repaint algorithm improvement (invalidated region merge, Board-level support)
 
 Example Games (Coming Soon)
 - Flappy ball
