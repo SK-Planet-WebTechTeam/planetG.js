@@ -21,6 +21,7 @@ Roadmap (2.0)
 - WebWorker integration
 - Physics Engine integration (Box2D, physicsJs)
 - Smart repaint algorithm improvement (invalidated region merge, Board-level support)
+- Entity level event binding
 
 Example Games (Coming Soon)
 - Flappy ball
