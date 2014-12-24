@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'BryantBoldAlt';
+    src: url('bryant-boldalt.eot');
+    src: url('bryant-boldalt.eot') format('embedded-opentype'),
+         url('bryant-boldalt.woff') format('woff'),
+         url('bryant-boldalt.ttf') format('truetype'),
+         url('bryant-boldalt.svg#BryantBoldAlt') format('svg');
+}
