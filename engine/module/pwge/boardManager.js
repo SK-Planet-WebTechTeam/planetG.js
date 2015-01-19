@@ -9,7 +9,7 @@ define("pwge/board", ["pwge/boardManager", "pwge/util"], function(boardManager, 
      * var newBoard = boardPool.allocate("boardname");
      *
      * @example
-     * var newBoard = boardPool.allocate("boardname", { x : 50, y : 100 }); //All entitie Board의 기준점. Board내의 모든 Entity들의 위치값에 영향을 준다.
+     * var newBoard = boardPool.allocate("boardname", { x : 50, y : 100 }); //All entitie Board의 기준점. affects positions for all Entities on Board
      */
     var Board = function(name, options){
         this.name = name;

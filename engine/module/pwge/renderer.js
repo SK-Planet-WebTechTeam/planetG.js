@@ -282,7 +282,7 @@ define("pwge/renderer", ["util/PubSub", "pwge/util", "pwge/renderer/transition"]
 
     /**
      * start a rendering loop.
-     * pause한 경우 재시작한다.
+     * restart when paused.
      * @return {renderer}
      */
     Renderer.prototype.start = function(){
@@ -304,7 +304,7 @@ define("pwge/renderer", ["util/PubSub", "pwge/util", "pwge/renderer/transition"]
 
     /**
      * pause rendering.
-     * 이후 start시 resume된다.
+     * resume when starts again 
      * @return {renderer}
      */
     Renderer.prototype.pause = function(){

@@ -25,7 +25,7 @@ define("pwge/util", function(){
     /**
      * object extend method
      * @function
-     * @return {Object} 확장된 객체
+     * @return {Object} extended object
      */
     util.extend = function() {
         var parent = arguments[0], child, i = 1, v;

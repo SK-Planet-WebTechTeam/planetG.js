@@ -120,7 +120,7 @@ define("pwge/loader", ["pwge/runtime", "pwge/soundManager", "pwge/util"], functi
     /**
      * load sound effect via WebAudio.
      * loaded sound is played by AudioContext, and sound mixing is also supported as per WebAudio spec.
-     * 로딩된 효과음은 AudioContext를 이용해 재생되며, 동시에 여러개의 효과음을 재생할 수 있다.
+     * loaded sound effect is played with AudioContext. multiple sound effect can be played simultaneously.
      * @param {Object} sound description object to be loaded.
      * @returm {Promise}
      * @example
