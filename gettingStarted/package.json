@@ -1,0 +1,16 @@
+{
+  "name": "gettingStarted",
+  "version": "0.0.0",
+  "description": "getting started page for pwge",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "assemble": "^0.4.42",
+    "grunt-contrib-watch": "^0.6.1"
+  }
+}

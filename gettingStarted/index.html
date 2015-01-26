@@ -1,0 +1,451 @@
+<!doctype html>
+<html>
+<head>
+	<title>Getting Started - Planet HTML5 Game Engine</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+	<link rel="stylesheet" href="res/css/styles/monokai.css">
+	<link rel="stylesheet" href="res/css/default.css">
+    <!-- [if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.0.5/es5-shim.min.js"></script>
+    <![endif]-->
+</head>
+<body data-spy="scroll" data-target=".navbar">
+	<header class="header">
+		<p>Planet HTML5 Game Engine</p>
+		<h1>Getting Started</h1>
+		<button type="button">menu toggle</button>
+	</header>
+	<div class="container">
+		<aside class="menu">
+			<nav class="navbar" data-spy="affix"  data-offset-top="150">
+				<h2>table of contents</h2>
+				<ul class="nav nav-tabs" role="tablist">
+					
+					
+					<li>
+						<a href="#entity">Entity</a>
+						<ul>
+						
+						
+						
+						
+						
+						
+						
+						
+						
+							<li><a href="#entity_pool">Entity Pool</a></li>
+						
+						
+						
+						
+						
+							<li><a href="#add_to_the_board">add to the board</a></li>
+						
+						
+						
+						
+						
+						
+						
+						</ul>
+					</li>
+					
+					<li>
+						<a href="#sprite">Sprite</a>
+						<ul>
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						</ul>
+					</li>
+					
+					<li>
+						<a href="#game_resources">Game Resources</a>
+						<ul>
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						</ul>
+					</li>
+					
+					<li>
+						<a href="#animation">Animation</a>
+						<ul>
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						</ul>
+					</li>
+					
+					
+				</ul>
+				<div class="top_button">
+					<a href="#"><span class="up_arrow"></span> top</a>
+				</div>
+			</nav>
+		</aside>
+		<main class="main">
+			
+			
+			<article id="entity">
+				<h2>Entity</h2>
+				<p>Any object you put in your game is an <strong>Entity</strong>. A character the user play around, a bullet the character shoots, obstacles that block the character&#39;s move.. everything is an entity. Entities should be allocated from the <a href="#entity_pool"><strong>Entity Pool</strong></a>, and then added to a Board to be presented in a specific game scene.</p>
+<p>An entity has following properties.</p>
+<pre><code class="json">{
+    "owner": null,
+    "domRendering": false,
+    "domRenderer": null,
+    "enabled": true,
+    "baseImage": null,
+    "baseSprite": null,
+    "animation": null,
+    "animationStart": 0,
+    "animationEnd": 0,
+    "sprite": null,
+    "spriteStart": 0,
+    "spriteEnd": 0,
+    "detectable": true,
+    "opacity": 1,
+    "anchorX": 0,
+    "anchorY": 0,
+    "rotate": 0,
+    "scaleX": 1,
+    "scaleY": 1,
+    "x": 0,
+    "y": 0,
+    "z": 0,
+    "width": 0,
+    "height": 0
+}
+</code></pre>
+
+
+
+				
+				
+				
+				
+				
+				
+				
+				
+				
+					<article id="entity_pool">
+						<h3>Entity Pool</h3>
+						<p>PWGE makes use of <strong>Entity Pool</strong> for efficient memory management (to suppresse garbage collection). Thus, every entity should be allocated in the entity pool properly when needed, and must be returned to the entity pool when it is no more in use. <strong>game.entityPool.allocate</strong> method allocates a new entity at available spot in the pool and reset the properties with given option (parameter).</p>
+<pre><code class="js">var new_entity = game.entityPool.allocate({
+    x: 50,
+    y: 50,
+    width: 100,
+    height: 100,
+    anchorX: 0,
+    anchorY: 0
+});
+</code></pre>
+
+
+					</article>
+				
+				
+				
+				
+				
+					<article id="add_to_the_board">
+						<h3>add to the board</h3>
+						<p>A new entity should be contained by a <strong>Board</strong>, otherwise, it will never show on the canvas. Adding an entity to a board is done with following code.</p>
+<pre><code class="js">new_entity.addTo( "name of a board" );
+</code></pre>
+
+					</article>
+				
+				
+				
+				
+				
+				
+				
+			</article>
+			
+			<article id="sprite">
+				<h2>Sprite</h2>
+				<p>Apply a sprite image to an entity is divided into two step.</p>
+<h4 id="step-1-define-sprite">step 1. define sprite</h4>
+<p>Sprite object has following properties.</p>
+<pre><code class="json">{
+    "image" : "bomb",
+    "x": 0,
+    "y": 0,
+    "width" : 135,
+    "height" : 135,
+    "frames" : 6,
+    "loop" : true,
+    "duration" : 1000,
+    "sleep": 100,
+    "order" : [0,1,2,3,4,5],
+    "easing" : "linear"
+}
+</code></pre>
+
+<ul>
+<li><strong>image</strong>: name of image. to apply a sprite image, you should load an image before you define a sprite, either by loader, or resource.js</li>
+<li><strong>x</strong>: top-left corner position of sprite</li>
+<li><strong>y</strong>: top-left corner position of sprite</li>
+<li><strong>width</strong>:</li>
+<li><strong>height</strong>:</li>
+<li><strong>frames</strong>: if applying a sprite animation, total count of sprite animation frames</li>
+<li><strong>loop</strong>: if true, repeat the sprite animation</li>
+<li><strong>duration</strong>:</li>
+<li><strong>sleep</strong>:</li>
+<li><strong>order</strong>: play order of each frame</li>
+<li><strong>easing</strong>: name of easing function</li>
+</ul>
+<p>To define a sprite explicitly with sprite manager, <strong>game.spriteManager.set(imageName, spriteName, option)</strong> method is used.</p>
+<pre><code class="js">game.spriteManager.set("bomb", "bombAnimation", {
+    x:0,
+    y:0,
+    width : 40,
+    height : 40,
+    frames : 6,
+    loop : true,
+    duration : 1000,
+    order : [0,1,2,3,4,5],
+    easing : "linear"
+});
+</code></pre>
+
+<p>To define a sprite in <strong>resource.js</strong>, add <strong>spriteInfo</strong> property to resource object. (for detailed information about resource.js, please refer to <a href="#resource_js">resource.js</a>)</p>
+<pre><code class="js">var resource = {
+    images : {
+        "bomb" : "images/bomb.png"
+    },
+    spriteInfo : {
+        "bomb" : {
+            image : "bomb",
+            x:0,
+            y:0,
+            width : 135,
+            height : 135,
+            frames : 6,
+            loop : true,
+            duration : 1000,
+            order : [0,1,2,3,4,5],
+            easing : "linear"
+        }
+    }
+};
+</code></pre>
+
+
+<h4 id="step-2-apply-pre-defined-sprite">step 2. apply pre-defined sprite</h4>
+<pre><code class="js">entity.setBaseSprite(); // set default sprite
+entity.applySprite(); // apply sprite
+</code></pre>
+
+<p>Entity class has two methods for applying sprite animation: <strong>entity.setBaseSprite( option )</strong> and <strong>entity.applySprite( option )</strong>. These two methods are slightly different. <strong>applySprite</strong> method applies given sprite on call, and once animation is done ( after [duration + sleep] ms ), the entity&#39;s sprite gets back to its default sprite animation which is set by <strong>setBaseSprite</strong> method.</p>
+
+
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			</article>
+			
+			<article id="game_resources">
+				<h2>Game Resources</h2>
+				<p>All resources and used in your game (images, sprite, music, etc.) can be configured in <strong>Game Resource file</strong>. Game Resource file looks like below.</p>
+<pre><code class="js">define("game/resource", function(){
+    var resource = {
+        imagePath : "images/",
+        images : {
+            "background": "background.png",
+            "player": "player.png",
+            "bullet": "bullet.png"
+        },
+        spriteInfo : {
+            "player" : {
+                image : "player",
+                x:0,
+                y:0,
+                width : 135,
+                height : 135,
+                frames : 6,
+                loop : true,
+                duration : 1000,
+                order : [0,1,2,3,4,5],
+                easing : "linear"
+            },
+            "bullet" : {
+                image : "bullet",
+                x:0,
+                y:0,
+                width : 135,
+                height : 135,
+                frames : 5,
+                loop : true,
+                duration : 1000,
+                order : [0,1,2,3,4],
+                easing : "linear"
+            }
+        },
+        musics : {
+            "bg" : "sound/loop.m4a"
+        },
+        sounds : {
+            "button"    : "sound/gem-0.mp3",
+            "click"     : "sound/click.mp3",
+            "explosion" : "sound/gem-4.mp3",
+            "timer"     : "sound/timer.mp3",
+            "endgame"   : "sound/endgame.mp3"
+        }
+    };
+
+    return resource;
+});
+</code></pre>
+
+<h4 id="properties-">Properties:</h4>
+<ul>
+<li><strong>imagePath</strong>: Path to image sources. According to game quality in game configuration setting, resource loader automatically append [ &quot;low/&quot;, &quot;mid/&quot;, &quot;high/&quot; ] to this path.</li>
+<li><strong>images</strong>: Images to load. &lt; name, filename &gt; pair.</li>
+<li><strong>spriteInfo</strong>: Sprite settings can be also done here. For detailed description on each property, please refer to <a href="#sprite">Sprite</a>. Image positions and sizes depend on the resolution setting in basic configuration. If your base resolution is set to &quot;high&quot;, and bullet image consists of five 135*135 sprite component images, then sprite setting for &quot;bullet&quot; is the same as shown above example.</li>
+<li><strong>musics</strong>:</li>
+<li><strong>sounds</strong>:</li>
+</ul>
+
+
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			</article>
+			
+			<article id="animation">
+				<h2>Animation</h2>
+				<p>Animation other than sprite animation is applied by <strong>entity.animate(option)</strong> method.</p>
+<pre><code class="js">entity.animate({
+    duration : 1000,
+    from : {
+        x : 0,
+        y : 0
+    },
+    to : {
+        x : 200,
+        y : 200
+    },
+    easing : {
+        x : 'linear',
+        y : 'linear'
+    },
+    callback : function () {
+        console.log( "animation end" );
+    }
+});
+</code></pre>
+
+<ul>
+<li><strong>duration</strong>: Total animation play time in ms.</li>
+<li><strong>from</strong>: Initial entity status at animation start. Any properties in Entity can be used.</li>
+<li><strong>to</strong>: Final entity status at animation start. Any properties in Entity can be used.</li>
+<li><strong>easing</strong>: Easing function name. Different easing functions can be used on each property in a single animation.</li>
+<li><strong>callback</strong>: Callback function triggered on animation end time (on &quot;animationend&quot; event)</li>
+</ul>
+
+
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			</article>
+			
+			
+		</main>
+	</div>
+	<footer class="footer">
+		<p>copyright &copy; SK planet. all rights reserved.</p>
+	</footer>
+	<script src="res/js/jquery-1.11.2.min.js"></script>
+	<script src="res/js/bootstrap.js"></script>
+	<script src="res/js/highlight.pack.js"></script>
+	<script src="res/js/default.js"></script>
+</body>
+</html>
