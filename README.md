@@ -26,18 +26,16 @@ Roadmap (2.0)
 - Garbage collector improvement (in an effort to suppress GC almost completely)
 - Online DPI/canvas-aware optimized image generation
 
-Development Guide
+Developer Guide
 - http://sk-planet-webtechteam.github.io/Planet-HTML5-Game-Engine/gettingStarted/index.html
-
-Example Games (Coming Soon)
-- Flappy ball
-- Piano tiles
-- Avoidance (done)
-- Baseball
-- Basket ball
 
 Technical Documents
 - http://www.slideshare.net/infect2/korea-linuxforum2014-html5gamesangseoklim
+
+Demo Games
+- Flappy ball
+- Avoidance
+- Sachunsung
 
 Project Maintainer
 - Lim, Sang Seok (sangseok.lim@gmail.com)
