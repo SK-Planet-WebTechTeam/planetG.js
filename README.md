@@ -26,6 +26,9 @@ Roadmap (2.0)
 - Garbage collector improvement (in an effort to suppress GC almost completely)
 - Online DPI/canvas-aware optimized image generation
 
+Development Guide
+- http://sk-planet-webtechteam.github.io/Planet-HTML5-Game-Engine/gettingStarted/index.html
+
 Example Games (Coming Soon)
 - Flappy ball
 - Piano tiles
