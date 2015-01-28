@@ -29,8 +29,8 @@ Sprite object has following properties.
 + **image**: name of image. to apply a sprite image, you should load an image before you define a sprite, either by loader, or resource.js
 + **x**: top-left corner position of sprite
 + **y**: top-left corner position of sprite
-+ **width**:
-+ **height**:
++ **width**: width of each frame. For example, a 100 x 20 sprite image consists of five 20 x 20 images for a frame, then this value should be 20.
++ **height**: height of each frame
 + **frames**: if applying a sprite animation, total count of sprite animation frames
 + **loop**: if true, repeat the sprite animation
 + **duration**:
@@ -53,7 +53,7 @@ To define a sprite explicitly with sprite manager, **game.spriteManager.set(imag
 });
 </code></pre>
 
-To define a sprite in **resource.js**, add **spriteInfo** property to resource object. (for detailed information about resource.js, please refer to [resource.js](#resource_js))
+To define a sprite in **resource.js**, add **spriteInfo** property to resource object. (for detailed information about resource.js, please refer to [Game Resources](#game_resources))
 <pre><code class="js">var resource = {
     images : {
         "bomb" : "images/bomb.png"
@@ -77,8 +77,8 @@ To define a sprite in **resource.js**, add **spriteInfo** property to resource o
 
 
 ####step 2. apply pre-defined sprite
-<pre><code class="js">entity.setBaseSprite(); // set default sprite
-entity.applySprite(); // apply sprite
+<pre><code class="js">entity.setBaseSprite( "sprite_name" ); // set default sprite
+entity.applySprite( "sprite_name" ); // apply sprite
 </code></pre>
 
-Entity class has two methods for applying sprite animation: **entity.setBaseSprite( option )** and **entity.applySprite( option )**. These two methods are slightly different. **applySprite** method applies given sprite on call, and once animation is done ( after [duration + sleep] ms ), the entity's sprite gets back to its default sprite animation which is set by **setBaseSprite** method.
+Entity class has two methods for applying sprite animation: **entity.setBaseSprite( spriteName )** and **entity.applySprite( spriteName )**. These two methods are slightly different. **applySprite** method applies given sprite on call, and once animation is done ( after [duration + sleep] ms ), the entity's sprite gets back to its default sprite animation which is set by **setBaseSprite** method.

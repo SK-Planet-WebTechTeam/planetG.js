@@ -135,18 +135,9 @@
 				<p>Any object you put in your game is an <strong>Entity</strong>. A character the user play around, a bullet the character shoots, obstacles that block the character&#39;s move.. everything is an entity. Entities should be allocated from the <a href="#entity_pool"><strong>Entity Pool</strong></a>, and then added to a Board to be presented in a specific game scene.</p>
 <p>An entity has following properties.</p>
 <pre><code class="json">{
-    "owner": null,
     "domRendering": false,
     "domRenderer": null,
     "enabled": true,
-    "baseImage": null,
-    "baseSprite": null,
-    "animation": null,
-    "animationStart": 0,
-    "animationEnd": 0,
-    "sprite": null,
-    "spriteStart": 0,
-    "spriteEnd": 0,
     "detectable": true,
     "opacity": 1,
     "anchorX": 0,
@@ -162,6 +153,20 @@
 }
 </code></pre>
 
+
+<ul>
+<li><strong>domRendering</strong>:</li>
+<li><strong>domRenderer</strong>:</li>
+<li><strong>enabled</strong>: if true, the entity is shown on board, otherwise it doesn&#39;t appear on board.</li>
+<li><strong>detectable</strong>:</li>
+<li><strong>opacity</strong>: opacity of the entity</li>
+<li><strong>anchorX, anchorY</strong>: anchor point to top-left corner from center</li>
+<li><strong>rotate</strong>: amount of rotation (in radian)</li>
+<li><strong>scaleX, scaleY</strong>: scale factor</li>
+<li><strong>x, y, z</strong>: entity&#39;s position on board (center of the entity)</li>
+<li><strong>width</strong>: width of the entity</li>
+<li><strong>height</strong>: height of the entity</li>
+</ul>
 
 
 				
@@ -199,6 +204,10 @@
 <pre><code class="js">new_entity.addTo( "name of a board" );
 </code></pre>
 
+<p>Or</p>
+<pre><code class="js">board.addEntity( new_entity );
+</code></pre>
+
 					</article>
 				
 				
@@ -233,8 +242,8 @@
 <li><strong>image</strong>: name of image. to apply a sprite image, you should load an image before you define a sprite, either by loader, or resource.js</li>
 <li><strong>x</strong>: top-left corner position of sprite</li>
 <li><strong>y</strong>: top-left corner position of sprite</li>
-<li><strong>width</strong>:</li>
-<li><strong>height</strong>:</li>
+<li><strong>width</strong>: width of each frame. For example, a 100 x 20 sprite image consists of five 20 x 20 images for a frame, then this value should be 20.</li>
+<li><strong>height</strong>: height of each frame</li>
 <li><strong>frames</strong>: if applying a sprite animation, total count of sprite animation frames</li>
 <li><strong>loop</strong>: if true, repeat the sprite animation</li>
 <li><strong>duration</strong>:</li>
@@ -256,7 +265,7 @@
 });
 </code></pre>
 
-<p>To define a sprite in <strong>resource.js</strong>, add <strong>spriteInfo</strong> property to resource object. (for detailed information about resource.js, please refer to <a href="#resource_js">resource.js</a>)</p>
+<p>To define a sprite in <strong>resource.js</strong>, add <strong>spriteInfo</strong> property to resource object. (for detailed information about resource.js, please refer to <a href="#game_resources">Game Resources</a>)</p>
 <pre><code class="js">var resource = {
     images : {
         "bomb" : "images/bomb.png"
@@ -280,11 +289,11 @@
 
 
 <h4 id="step-2-apply-pre-defined-sprite">step 2. apply pre-defined sprite</h4>
-<pre><code class="js">entity.setBaseSprite(); // set default sprite
-entity.applySprite(); // apply sprite
+<pre><code class="js">entity.setBaseSprite( "sprite_name" ); // set default sprite
+entity.applySprite( "sprite_name" ); // apply sprite
 </code></pre>
 
-<p>Entity class has two methods for applying sprite animation: <strong>entity.setBaseSprite( option )</strong> and <strong>entity.applySprite( option )</strong>. These two methods are slightly different. <strong>applySprite</strong> method applies given sprite on call, and once animation is done ( after [duration + sleep] ms ), the entity&#39;s sprite gets back to its default sprite animation which is set by <strong>setBaseSprite</strong> method.</p>
+<p>Entity class has two methods for applying sprite animation: <strong>entity.setBaseSprite( spriteName )</strong> and <strong>entity.applySprite( spriteName )</strong>. These two methods are slightly different. <strong>applySprite</strong> method applies given sprite on call, and once animation is done ( after [duration + sleep] ms ), the entity&#39;s sprite gets back to its default sprite animation which is set by <strong>setBaseSprite</strong> method.</p>
 
 
 				

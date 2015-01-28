@@ -10,18 +10,9 @@ Any object you put in your game is an **Entity**. A character the user play arou
 
 An entity has following properties.
 <pre><code class="json">{
-    "owner": null,
     "domRendering": false,
     "domRenderer": null,
     "enabled": true,
-    "baseImage": null,
-    "baseSprite": null,
-    "animation": null,
-    "animationStart": 0,
-    "animationEnd": 0,
-    "sprite": null,
-    "spriteStart": 0,
-    "spriteEnd": 0,
     "detectable": true,
     "opacity": 1,
     "anchorX": 0,
@@ -36,3 +27,16 @@ An entity has following properties.
     "height": 0
 }
 </code></pre>
+
+
+- **domRendering**:
+- **domRenderer**:
+- **enabled**: if true, the entity is shown on board, otherwise it doesn't appear on board.
+- **detectable**:
+- **opacity**: opacity of the entity
+- **anchorX, anchorY**: anchor point to top-left corner from center
+- **rotate**: amount of rotation (in radian)
+- **scaleX, scaleY**: scale factor
+- **x, y, z**: entity's position on board (center of the entity)
+- **width**: width of the entity
+- **height**: height of the entity
