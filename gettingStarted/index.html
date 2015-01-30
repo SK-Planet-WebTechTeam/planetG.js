@@ -226,7 +226,7 @@
                         
                         
                         
-                            <li><a href="#add_to_the_board">add to the board</a></li>
+                            <li><a href="#add_to_scene">add to scene</a></li>
                         
                         
                         
@@ -287,7 +287,7 @@
                         
                         
                         
-                            <li><a href="#add_to_the_board">add to the board</a></li>
+                            <li><a href="#add_to_board">add to board</a></li>
                         
                         
                         
@@ -947,7 +947,7 @@ renderer.switchScene("targetScene", {
 <pre><code class="js">var playBoard = game.boardManager.makeBoard("boardname", { x : 50, y : 100 });
 </code></pre>
 
-<p>You can set offset of the board from the canvas&#39;s ( 0, 0 ) by second argument. Setting offset will affect position of all entities in board.</p>
+<p>You can set offset of the board from the canvas&#39;s ( 0, 0 ) by the second argument. Setting offset will affect position of all entities in board.</p>
 
 
                 
@@ -957,8 +957,8 @@ renderer.switchScene("targetScene", {
                 
                 
                 
-                    <article id="add_to_the_board">
-                        <h3>add to the board</h3>
+                    <article id="add_to_scene">
+                        <h3>add to scene</h3>
                         <p>Adding boards to a scene is only done on scene creation. Thus, make sure you create all boards before you create a scene to add them.</p>
 <pre><code class="js">var introBoard = game.boardManager.makeBoard("boardname"),
     playBoard = game.boardManager.makeBoard("playBoard", { x : 50, y : 100 });
@@ -1077,8 +1077,8 @@ game.renderer.makeScene("introScene",["introBoard", "playBoard"]);
                 
                 
                 
-                    <article id="add_to_the_board">
-                        <h3>add to the board</h3>
+                    <article id="add_to_board">
+                        <h3>add to board</h3>
                         <p>A new entity should be contained by a <strong>Board</strong>, otherwise, it will never show on the canvas. Adding an entity to a board is done with following code.</p>
 <pre><code class="js">new_entity.addTo( "name of a board" );
 </code></pre>
