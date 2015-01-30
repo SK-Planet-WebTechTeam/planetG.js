@@ -146,6 +146,9 @@ h1, h2 {
     width: 92%;
     padding-left: 7%;
 }
+.main ul ul {
+    list-style-type: square;
+}
 
 .menu{
     float:right;
