@@ -24,7 +24,7 @@ ratioX/Y gives you the ratio of current position to viewport size.
 
 canvasX/Y gives current position on canvas.
 
-designX/Y gives current position on canvas, based on size of base resolution. Suppose base resolution is set to 360*450 and real canvas size shown on the screen is 720*900, and you click on ( 100, 100 ) on the screen. Then designX/Y gives ( 50, 50 ). This is useful because if you need any calculation with event position, you don't need to worry about varying canvas size.
+designX/Y gives current position on canvas, based on size of base resolution. Suppose base resolution is set to 360x450 and real canvas size shown on the screen is 720x900, and you click on ( 100, 100 ) on the screen. Then designX/Y gives ( 50, 50 ). This is useful because if you need any calculation with event position, you don't need to worry about varying canvas size.
 
 <pre><code class="js">var onTouch = function(e) {
 var x = e.designX,
