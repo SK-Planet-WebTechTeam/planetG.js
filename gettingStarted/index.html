@@ -1,610 +1,610 @@
 <!doctype html>
 <html>
 <head>
-	<title>Getting Started - Planet HTML5 Game Engine</title>
-	<meta charset="utf-8">
+    <title>Getting Started - Planet HTML5 Game Engine</title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-	<link rel="stylesheet" href="res/css/styles/monokai.css">
-	<link rel="stylesheet" href="res/css/default.css">
+    <link rel="stylesheet" href="res/css/styles/monokai.css">
+    <link rel="stylesheet" href="res/css/default.css">
     <!-- [if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.0.5/es5-shim.min.js"></script>
     <![endif]-->
 </head>
 <body data-spy="scroll" data-target=".navbar">
-	<header class="header">
-		<p>Planet HTML5 Game Engine</p>
-		<h1>Getting Started</h1>
-		<button type="button">menu toggle</button>
-	</header>
-	<div class="container">
-		<aside class="menu">
-			<nav class="navbar" data-spy="affix"  data-offset-top="150">
-				<h2>table of contents</h2>
-				<ul class="nav nav-tabs" role="tablist">
-					
-					
-					<li>
-						<a href="#installation">Installation</a>
-						<ul>
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						</ul>
-					</li>
-					
-					<li>
-						<a href="#game">Game</a>
-						<ul>
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						</ul>
-					</li>
-					
-					<li>
-						<a href="#renderer">Renderer</a>
-						<ul>
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-							<li><a href="#dom_renderer">DOM Renderer</a></li>
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						</ul>
-					</li>
-					
-					<li>
-						<a href="#scene">Scene</a>
-						<ul>
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-							<li><a href="#make_scene">Make Scene</a></li>
-						
-						
-						
-						
-						
-							<li><a href="#scene_transition">Scene Transition</a></li>
-						
-						
-						
-						
-						
-						
-						
-						</ul>
-					</li>
-					
-					<li>
-						<a href="#board">Board</a>
-						<ul>
-						
-						
-						
-						
-						
-						
-						
-							<li><a href="#add_to_the_board">add to the board</a></li>
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						</ul>
-					</li>
-					
-					<li>
-						<a href="#entity">Entity</a>
-						<ul>
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-							<li><a href="#entity_pool">Entity Pool</a></li>
-						
-						
-						
-						
-						
-							<li><a href="#add_to_the_board">add to the board</a></li>
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						</ul>
-					</li>
-					
-					<li>
-						<a href="#sprite">Sprite</a>
-						<ul>
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						</ul>
-					</li>
-					
-					<li>
-						<a href="#game_resources">Game Resources</a>
-						<ul>
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						</ul>
-					</li>
-					
-					<li>
-						<a href="#animation">Animation</a>
-						<ul>
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						</ul>
-					</li>
-					
-					<li>
-						<a href="#input">Input</a>
-						<ul>
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						</ul>
-					</li>
-					
-					<li>
-						<a href="#offscreen_canvas">Offscreen Canvas</a>
-						<ul>
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						</ul>
-					</li>
-					
-					<li>
-						<a href="#sound">Sound</a>
-						<ul>
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						</ul>
-					</li>
-					
-					
-				</ul>
-				<div class="top_button">
-					<a href="#"><span class="up_arrow"></span> top</a>
-				</div>
-			</nav>
-		</aside>
-		<main class="main">
-			
-			
-			<article id="installation">
-				<h2>Installation</h2>
-				<p>The very first thing you need to do is import our JS file. In your HTML file where you want to put our game engine, include following code in <code class="html">&lt;head&gt;&lt;/head&gt;</code>.</p>
+    <header class="header">
+        <p>Planet HTML5 Game Engine</p>
+        <h1>Getting Started</h1>
+        <button type="button">menu toggle</button>
+    </header>
+    <div class="container">
+        <aside class="menu">
+            <nav class="navbar" data-spy="affix"  data-offset-top="150">
+                <h2>table of contents</h2>
+                <ul class="nav nav-tabs" role="tablist">
+                    
+                    
+                    <li>
+                        <a href="#installation">Installation</a>
+                        <ul>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <a href="#game">Game</a>
+                        <ul>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <a href="#renderer">Renderer</a>
+                        <ul>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                            <li><a href="#dom_renderer">DOM Renderer</a></li>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <a href="#scene">Scene</a>
+                        <ul>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                            <li><a href="#make_scene">Make Scene</a></li>
+                        
+                        
+                        
+                        
+                        
+                            <li><a href="#scene_transition">Scene Transition</a></li>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <a href="#board">Board</a>
+                        <ul>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                            <li><a href="#add_to_the_board">add to the board</a></li>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <a href="#entity">Entity</a>
+                        <ul>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                            <li><a href="#entity_pool">Entity Pool</a></li>
+                        
+                        
+                        
+                        
+                        
+                            <li><a href="#add_to_the_board">add to the board</a></li>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <a href="#sprite">Sprite</a>
+                        <ul>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <a href="#game_resources">Game Resources</a>
+                        <ul>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <a href="#animation">Animation</a>
+                        <ul>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <a href="#input">Input</a>
+                        <ul>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <a href="#offscreen_canvas">Offscreen Canvas</a>
+                        <ul>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <a href="#sound">Sound</a>
+                        <ul>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        </ul>
+                    </li>
+                    
+                    
+                </ul>
+                <div class="top_button">
+                    <a href="#"><span class="up_arrow"></span> top</a>
+                </div>
+            </nav>
+        </aside>
+        <main class="main">
+            
+            
+            <article id="installation">
+                <h2>Installation</h2>
+                <p>The very first thing you need to do is import our JS file. In your HTML file where you want to put our game engine, include following code in <code class="html">&lt;head&gt;&lt;/head&gt;</code>.</p>
 <pre><code class="html">&lt;script src="./engine/lib/polyfill.js"&gt;&lt;/script&gt;
 &lt;script src="./engine/lib/promise-0.1.1.js"&gt;&lt;/script&gt;
 &lt;script src="./engine/lib/require.js" data-main="js/main.js"&gt;&lt;/script&gt;
@@ -650,50 +650,50 @@ For more information, please refer to <a href="http://requirejs.org/docs/api.htm
 </ul>
 
 
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-			</article>
-			
-			<article id="game">
-				<h2>Game</h2>
-				<p>Game object has all configuration of how to draw your game on canvas, and holds all other objects in your game such as scenes, boards, entities, etc, which will be explained on later parts.</p>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+            </article>
+            
+            <article id="game">
+                <h2>Game</h2>
+                <p>Game object has all configuration of how to draw your game on canvas, and holds all other objects in your game such as scenes, boards, entities, etc, which will be explained on later parts.</p>
 <pre><code class="js">require(['pwge/game', 'game/resource', ...], function(Game, resource, ...) {
     var game = new Game({
         container : window,
@@ -739,50 +739,50 @@ For more information, please refer to <a href="http://requirejs.org/docs/api.htm
 </ul>
 
 
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-			</article>
-			
-			<article id="renderer">
-				<h2>Renderer</h2>
-				<p><strong>Renderer</strong> manages the game&#39;s time process, and manages game scenes. Renderer&#39;s loop function is called on every frame by requestAnimationFrame, do any neccessary calculation for your game, and draw each frame on the screen. &quot;step&quot;, &quot;draw&quot; event is triggered on every loop function call, so you can listen to these events to do calculations or anything you want to do.</p>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+            </article>
+            
+            <article id="renderer">
+                <h2>Renderer</h2>
+                <p><strong>Renderer</strong> manages the game&#39;s time process, and manages game scenes. Renderer&#39;s loop function is called on every frame by requestAnimationFrame, do any neccessary calculation for your game, and draw each frame on the screen. &quot;step&quot;, &quot;draw&quot; event is triggered on every loop function call, so you can listen to these events to do calculations or anything you want to do.</p>
 <pre><code class="js">game.renderer.on("step", function(dt) {
     ...
 });
@@ -795,109 +795,109 @@ game.renderer.on("draw", function(dt) {
 <p>The argument passed in the callback function , <strong>dt</strong>, is delta time between this frame and the last frame.</p>
 
 
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-					<article id="dom_renderer">
-						<h3>DOM Renderer</h3>
-						
-					</article>
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-			</article>
-			
-			<article id="scene">
-				<h2>Scene</h2>
-				<p>A game consists of at least one <strong>game scene</strong>, and renderer takes care of scene transition on user input or specific event. For instance, suppose your game has a &quot;game start&quot; button, and click on the button starts the game, and 1 minutes after game ends and displays players score. Then, the first scene of your game is the screen with &quot;game start&quot; button, the second is game playing screen, and the last scene is the screen with players score.</p>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                    <article id="dom_renderer">
+                        <h3>DOM Renderer</h3>
+                        
+                    </article>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+            </article>
+            
+            <article id="scene">
+                <h2>Scene</h2>
+                <p>A game consists of at least one <strong>game scene</strong>, and renderer takes care of scene transition on user input or specific event. For instance, suppose your game has a &quot;game start&quot; button, and click on the button starts the game, and 1 minutes after game ends and displays players score. Then, the first scene of your game is the screen with &quot;game start&quot; button, the second is game playing screen, and the last scene is the screen with players score.</p>
 
 
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-					<article id="make_scene">
-						<h3>Make Scene</h3>
-						<p>To make a scene in your game, simply call Renderer&#39;s makeScene method.</p>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                    <article id="make_scene">
+                        <h3>Make Scene</h3>
+                        <p>To make a scene in your game, simply call Renderer&#39;s makeScene method.</p>
 <pre><code class="js">game.renderer.makeScene("introScene",["introBoard"]);
 </code></pre>
 
 <p>The first argument is the <strong>name of new scene</strong>, and the second one is an <strong>array of names of <a href="#board">Boards</a></strong> to include in the new scene. There is no <strong>Scene</strong> object explicitly accessable by developers, or no property for scene either. The only thing open to developers is the name of the scene. Thus, boards must be created before you create a scene.</p>
 
-					</article>
-				
-				
-				
-				
-				
-					<article id="scene_transition">
-						<h3>Scene Transition</h3>
-						<p>Planet game engine supports <strong>scene transition effect</strong>.</p>
+                    </article>
+                
+                
+                
+                
+                
+                    <article id="scene_transition">
+                        <h3>Scene Transition</h3>
+                        <p>Planet game engine supports <strong>scene transition effect</strong>.</p>
 <pre><code class="js">game.renderer.switchScene("introScene", "zoomOut");
 </code></pre>
 
@@ -931,35 +931,35 @@ renderer.switchScene("targetScene", {
 </code></pre>
 
 
-					</article>
-				
-				
-				
-				
-				
-				
-				
-			</article>
-			
-			<article id="board">
-				<h2>Board</h2>
-				<p>Board is where all the entities in the game is included and presented. A board must be included in a Scene, or it will never shown on the canvas. A scene can have multiple boards.</p>
+                    </article>
+                
+                
+                
+                
+                
+                
+                
+            </article>
+            
+            <article id="board">
+                <h2>Board</h2>
+                <p>Board is where all the entities in the game is included and presented. A board must be included in a Scene, or it will never shown on the canvas. A scene can have multiple boards.</p>
 <pre><code class="js">var playBoard = game.boardManager.makeBoard("boardname", { x : 50, y : 100 });
 </code></pre>
 
 <p>You can set offset of the board from the canvas&#39;s ( 0, 0 ) by second argument. Setting offset will affect position of all entities in board.</p>
 
 
-				
-				
-				
-				
-				
-				
-				
-					<article id="add_to_the_board">
-						<h3>add to the board</h3>
-						<p>Adding boards to a scene is only done on scene creation. Thus, make sure you create all boards before you create a scene to add them.</p>
+                
+                
+                
+                
+                
+                
+                
+                    <article id="add_to_the_board">
+                        <h3>add to the board</h3>
+                        <p>Adding boards to a scene is only done on scene creation. Thus, make sure you create all boards before you create a scene to add them.</p>
 <pre><code class="js">var introBoard = game.boardManager.makeBoard("boardname"),
     playBoard = game.boardManager.makeBoard("playBoard", { x : 50, y : 100 });
 
@@ -967,65 +967,65 @@ game.renderer.makeScene("introScene",["introBoard", "playBoard"]);
 </code></pre>
 
 
-					</article>
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-			</article>
-			
-			<article id="entity">
-				<h2>Entity</h2>
-				<p>Any object you put in your game is an <strong>Entity</strong>. A character the user play around, a bullet the character shoots, obstacles that block the character&#39;s move.. everything is an entity. Entities should be allocated from the <a href="#entity_pool"><strong>Entity Pool</strong></a>, and then added to a Board to be presented in a specific game scene.</p>
+                    </article>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+            </article>
+            
+            <article id="entity">
+                <h2>Entity</h2>
+                <p>Any object you put in your game is an <strong>Entity</strong>. A character the user play around, a bullet the character shoots, obstacles that block the character&#39;s move.. everything is an entity. Entities should be allocated from the <a href="#entity_pool"><strong>Entity Pool</strong></a>, and then added to a Board to be presented in a specific game scene.</p>
 
 
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-					<article id="entity_pool">
-						<h3>Entity Pool</h3>
-						<p>PWGE makes use of <strong>Entity Pool</strong> for efficient memory management (to suppresse garbage collection). Thus, every entity should be allocated in the entity pool properly when needed, and must be returned to the entity pool when it is no more in use. <strong>game.entityPool.allocate</strong> method allocates a new entity at available spot in the pool and reset the properties with given option (parameter).</p>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                    <article id="entity_pool">
+                        <h3>Entity Pool</h3>
+                        <p>PWGE makes use of <strong>Entity Pool</strong> for efficient memory management (to suppresse garbage collection). Thus, every entity should be allocated in the entity pool properly when needed, and must be returned to the entity pool when it is no more in use. <strong>game.entityPool.allocate</strong> method allocates a new entity at available spot in the pool and reset the properties with given option (parameter).</p>
 <pre><code class="js">var new_entity = game.entityPool.allocate({
     x: 50,
     y: 50,
@@ -1071,15 +1071,15 @@ game.renderer.makeScene("introScene",["introBoard", "playBoard"]);
 <li><strong>height</strong>: height of the entity</li>
 </ul>
 
-					</article>
-				
-				
-				
-				
-				
-					<article id="add_to_the_board">
-						<h3>add to the board</h3>
-						<p>A new entity should be contained by a <strong>Board</strong>, otherwise, it will never show on the canvas. Adding an entity to a board is done with following code.</p>
+                    </article>
+                
+                
+                
+                
+                
+                    <article id="add_to_the_board">
+                        <h3>add to the board</h3>
+                        <p>A new entity should be contained by a <strong>Board</strong>, otherwise, it will never show on the canvas. Adding an entity to a board is done with following code.</p>
 <pre><code class="js">new_entity.addTo( "name of a board" );
 </code></pre>
 
@@ -1087,39 +1087,39 @@ game.renderer.makeScene("introScene",["introBoard", "playBoard"]);
 <pre><code class="js">board.addEntity( new_entity );
 </code></pre>
 
-					</article>
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-			</article>
-			
-			<article id="sprite">
-				<h2>Sprite</h2>
-				<p>Apply a sprite image to an entity is divided into two step.</p>
+                    </article>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+            </article>
+            
+            <article id="sprite">
+                <h2>Sprite</h2>
+                <p>Apply a sprite image to an entity is divided into two step.</p>
 <h4 id="step-1-define-sprite">step 1. define sprite</h4>
 <p>Sprite object has following properties.</p>
 <pre><code class="json">{
@@ -1195,50 +1195,50 @@ entity.applySprite( "sprite_name" ); // apply sprite
 <p>Entity class has two methods for applying sprite animation: <strong>entity.setBaseSprite( spriteName )</strong> and <strong>entity.applySprite( spriteName )</strong>. These two methods are slightly different. <strong>applySprite</strong> method applies given sprite on call, and once animation is done ( after [duration + sleep] ms ), the entity&#39;s sprite gets back to its default sprite animation which is set by <strong>setBaseSprite</strong> method.</p>
 
 
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-			</article>
-			
-			<article id="game_resources">
-				<h2>Game Resources</h2>
-				<p>All resources and used in your game (images, sprite, music, etc.) can be configured in <strong>Game Resource file</strong>. Game Resource file looks like below.</p>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+            </article>
+            
+            <article id="game_resources">
+                <h2>Game Resources</h2>
+                <p>All resources and used in your game (images, sprite, music, etc.) can be configured in <strong>Game Resource file</strong>. Game Resource file looks like below.</p>
 <pre><code class="js">define("game/resource", function(){
     var resource = {
         imagePath : "images/",
@@ -1299,52 +1299,52 @@ entity.applySprite( "sprite_name" ); // apply sprite
 </ul>
 
 
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-			</article>
-			
-			<article id="animation">
-				<h2>Animation</h2>
-				<p>Animation other than sprite animation is applied by <strong>entity.animate(option)</strong> method.</p>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+            </article>
+            
+            <article id="animation">
+                <h2>Animation</h2>
+                <p>Animation other than sprite animation is applied by <strong>entity.animate(option)</strong> method.</p>
 <pre><code class="js">entity.animate({
     duration : 1000,
     from : {
@@ -1374,52 +1374,52 @@ entity.applySprite( "sprite_name" ); // apply sprite
 </ul>
 
 
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-			</article>
-			
-			<article id="input">
-				<h2>Input</h2>
-				<p>Planet Game Engine has <strong>Input</strong> module for you to handle events more conveniently. To add/remove event handler, call <strong>game.input.on/game.input.off</strong> as below.</p>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+            </article>
+            
+            <article id="input">
+                <h2>Input</h2>
+                <p>Planet Game Engine has <strong>Input</strong> module for you to handle events more conveniently. To add/remove event handler, call <strong>game.input.on/game.input.off</strong> as below.</p>
 <pre><code class="js">var onTouch = function(e) {
     console.log("touch event");
 };
@@ -1433,7 +1433,7 @@ game.input.off("touchstart", onTouch);
 <p>The major advantage of using input module is that Planet game engine calculates coordinates for you. Event object passed to your callback function has 6 more coordinate information: ratioX, ratioY, canvasX, canvasY, designX, and designY.;</p>
 <p>ratioX/Y gives you the ratio of current position to viewport size.</p>
 <p>canvasX/Y gives current position on canvas.</p>
-<p>designX/Y gives current position on canvas, based on size of base resolution. Suppose base resolution is set to 360<em>450 and real canvas size shown on the screen is 720</em>900, and you click on ( 100, 100 ) on the screen. Then designX/Y gives ( 50, 50 ). This is useful because if you need any calculation with event position, you don&#39;t need to worry about varying canvas size.</p>
+<p>designX/Y gives current position on canvas, based on size of base resolution. Suppose base resolution is set to 360x450 and real canvas size shown on the screen is 720x900, and you click on ( 100, 100 ) on the screen. Then designX/Y gives ( 50, 50 ). This is useful because if you need any calculation with event position, you don&#39;t need to worry about varying canvas size.</p>
 <pre><code class="js">var onTouch = function(e) {
 var x = e.designX,
     y = e.designY;
@@ -1445,146 +1445,146 @@ var x = e.designX,
 
 
 
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-			</article>
-			
-			<article id="offscreen_canvas">
-				<h2>Offscreen Canvas</h2>
-				
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+            </article>
+            
+            <article id="offscreen_canvas">
+                <h2>Offscreen Canvas</h2>
+                
 
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-			</article>
-			
-			<article id="sound">
-				<h2>Sound</h2>
-				
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+            </article>
+            
+            <article id="sound">
+                <h2>Sound</h2>
+                
 
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-			</article>
-			
-			
-		</main>
-	</div>
-	<footer class="footer">
-		<p>copyright &copy; SK planet. all rights reserved.</p>
-	</footer>
-	<script src="res/js/jquery-1.11.2.min.js"></script>
-	<script src="res/js/bootstrap.js"></script>
-	<script src="res/js/highlight.pack.js"></script>
-	<script src="res/js/default.js"></script>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+            </article>
+            
+            
+        </main>
+    </div>
+    <footer class="footer">
+        <p>copyright &copy; SK planet. all rights reserved.</p>
+    </footer>
+    <script src="res/js/jquery-1.11.2.min.js"></script>
+    <script src="res/js/bootstrap.js"></script>
+    <script src="res/js/highlight.pack.js"></script>
+    <script src="res/js/default.js"></script>
 </body>
 </html>
