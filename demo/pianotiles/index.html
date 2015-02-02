@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>:: Piano Tiles ::</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <style>
+        body {
+            margin: 0 auto;
+        }
+
+        .rendererDOM{
+            position: absolute;
+            z-index: 10;
+            -webkit-transform-origin: left top;
+            -webkit-transform: translate3d(0, 0, 0);
+            background-repeat: no-repeat;
+        }
+
+        #container{
+            position:absolute;
+            overflow-x:hidden;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <canvas id="canvas"></canvas>
+    </div>
+    <div class="rendererDOM"></div>
+    <div class="rendererDOM"></div>
+    <div class="rendererDOM"></div>
+    <div class="rendererDOM"></div>
+    <div class="rendererDOM"></div>
+    <div class="rendererDOM"></div>
+    <div class="rendererDOM"></div>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="../../engine/lib/polyfill.js"></script>
+    <script src="../../engine/lib/promise-0.1.1.js"></script>
+    <script src="../../engine/lib/require.js" data-main="js/main.js"></script>
+
+</body>
+</html>

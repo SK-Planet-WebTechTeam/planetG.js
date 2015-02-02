@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+    <canvas class="canvas"></canvas>
+    <script>
+        var canvas = document.getElementsByClassName("canvas");
+        var ctx = canvas[0].getContext("2d");
+        ctx.canvas.width = 30;
+        ctx.canvas.height = 30;
+//        ctx.clearRect(0,0,40,40);
+        ctx.font="30px Georgia";
+//        ctx.fillText("Hello World!",10,50);
+        ctx.fillText("hi",5,20);
+    </script>
+</body>
+</html>
