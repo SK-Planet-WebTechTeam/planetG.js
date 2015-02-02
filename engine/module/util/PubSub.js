@@ -38,8 +38,11 @@ define("util/PubSub", function(){
             return false;
         }
 
-        var args = Array.prototype.splice.call(arguments, 1),
-            ret = true, i, len;
+        var args = [], ret = true, i, len;
+
+        for (i = 1, len = arguments.length; i < len; i++) {
+            args.push(arguments[i]);
+        }
 
         for (i = 0, len = this._eventHandler[eventName].length; i < len; i++) {
             if (typeof this._eventHandler[eventName][i] !== "undefined" && !this._eventHandler[eventName][i].apply(this, args)) {
