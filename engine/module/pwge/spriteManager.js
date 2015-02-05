@@ -42,6 +42,7 @@ define("pwge/spriteManager", ["pwge/canvas", "util/easing", "pwge/util"], functi
         this.width = this.options.width;
         this.height = this.options.height;
         this.lastAwake = 0;
+        this.easingFn = easing[this.options.easing];
 
         if (!this.options.order.length) {
             for (i = 0; i < this.options.frames; i++) {
@@ -113,7 +114,7 @@ define("pwge/spriteManager", ["pwge/canvas", "util/easing", "pwge/util"], functi
         if (!this.options.loop && dt > (this.options.duration + this.options.sleep) * this.options.repeat) {
             return this.options.order[this.options.order.length - 1];
         }
-        return this.options.order[Math.min(this.options.order.length - 1, Math.floor(easing[this.options.easing](dt % (this.options.duration + this.options.sleep), 0, this.options.order.length, this.options.duration)))];
+        return this.options.order[Math.min(this.options.order.length - 1, Math.floor(this.easingFn(dt % (this.options.duration + this.options.sleep), 0, this.options.order.length, this.options.duration)))];
     };
 
     /**
