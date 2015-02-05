@@ -30,7 +30,7 @@ Developer Guide
 - http://sk-planet-webtechteam.github.io/Planet-HTML5-Game-Engine/gettingStarted/index.html
 
 Technical Documents
-- How to improve rendering performance by canvas and DOM/GPU hybrid: http://www.slideshare.net/infect2/korea-linuxforum2014-html5gamesangseoklim
+- How to improve rendering performance by canvas and DOM/GPU hybrid rendering and plus more: http://www.slideshare.net/infect2/korea-linuxforum2014-html5gamesangseoklim
 - How to improve JavaScript Performance in the V8-friendly way: http://www.slideshare.net/up2soul/planet-html5gameengine-javascript-performance-enhancement
 
 Demo Games
