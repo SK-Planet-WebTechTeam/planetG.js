@@ -1,4 +1,4 @@
-HTML5 Game Engine for Mobile Devices
+Extremely Lightweight HTML5 Game Engine for Mobile Devices
 ========================
 
 This project contains the commercially-proven HTML5 game engine based on canvas and DOM/GPU specialized for mobile devices (Android and iOS).
