@@ -330,6 +330,7 @@ define("pwge/board", ["pwge/boardManager", "pwge/util"], function(boardManager, 
                 if (this._boardManager._owner.config.clearCanvasOnEveryFrame || !orderedEntities[i].rootBG ) {
                     if (!!orderedEntities[i].dirty) {
                         orderedEntities[i]._flush();
+                        orderedEntities[i].dirty = false;
                     }
                 }
                 else {
