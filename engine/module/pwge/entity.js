@@ -41,6 +41,7 @@ define("pwge/entity", ["pwge/spriteManager", "pwge/util", "util/PubSub", "util/e
         this._z = 0;
         this.width = 0;
         this.height = 0;
+        this.dirty = false;
 
         if (options) {
             util.extend(this, options);
@@ -110,7 +111,7 @@ define("pwge/entity", ["pwge/spriteManager", "pwge/util", "util/PubSub", "util/e
         for (var i = 0, len = this._stepProps.length; i < len; i++) {
             if (this._lastStep[this._stepProps[i]] !== this[this._stepProps[i]]) {
                 if (this.owner) {
-                    this.owner.dirty = true;
+                    this.owner.dirty = this.dirty = true;
                     return true;
                 }
             }
@@ -119,7 +120,7 @@ define("pwge/entity", ["pwge/spriteManager", "pwge/util", "util/PubSub", "util/e
         for (var i = 0, len = this._drawProps.length; i < len; i++) {
             if (this._lastDraw[this._drawProps[i]] !== this._drawImageData[this._drawProps[i]]) {
                 if (this.owner) {
-                    this.owner.dirty = true;
+                    this.owner.dirty = this.dirty = true;
                     return true;
                 }
             }
@@ -216,7 +217,7 @@ define("pwge/entity", ["pwge/spriteManager", "pwge/util", "util/PubSub", "util/e
     };
 
     Entity.prototype._updateInvalidatedRegion = function(invalidatedRects) {
-        if(invalidatedRects.length < 1 || this.owner._bgInit ){
+        if( this.owner._bgInit ){
             this.owner._bgInit = false;
             return this._flush();
         }

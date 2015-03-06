@@ -328,7 +328,10 @@ define("pwge/board", ["pwge/boardManager", "pwge/util"], function(boardManager, 
         for (i = 0, len = orderedEntities.length; i < len; i++) {
             if (this._boardManager._owner.renderer.isRendering && this.enabled && orderedEntities[i] && orderedEntities[i].owner === this && orderedEntities[i].enabled) {
                 if (this._boardManager._owner.config.clearCanvasOnEveryFrame || !orderedEntities[i].rootBG ) {
-                    orderedEntities[i]._flush();
+                    if (!!orderedEntities[i].dirty) {
+                        orderedEntities[i]._flush();
+                        orderedEntities[i].dirty = false;
+                    }
                 }
                 else {
                     // When Entity contains a root background and DOMRender is enabled,
