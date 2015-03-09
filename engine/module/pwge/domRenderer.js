@@ -64,12 +64,12 @@ define("pwge/domRenderer", ["pwge/util", "util/PubSub"], function(util, PubSub){
         }
 
         //if miss, create a node with the prop and then return it
+        this.nodes[len-1].refDOMNode.className = this.selector; //need to be reset
         this.nodes[len-1].refDOMNode.classList.add(prop);
         this.nodes[len-1].classList.push(prop);
         return this.nodes.pop();
     };
 
-   
     DOMRenderer.prototype.returnRendererNode = function( node, hardReset ){
         node.reset( hardReset );
         this.nodes.push(node);
