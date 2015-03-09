@@ -70,7 +70,6 @@ define("pwge/domRenderer", ["pwge/util", "util/PubSub"], function(util, PubSub){
         return this.nodes.pop();
     };
 
-
     DOMRenderer.prototype.returnRendererNode = function( node, hardReset ){
         node.reset( hardReset );
         this.nodes.push(node);
