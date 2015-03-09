@@ -25,6 +25,7 @@ Roadmap (2.0)
 - V8/Jit friendly engine refactoring
 - Garbage collector improvement (in an effort to suppress GC almost completely)
 - Online DPI/canvas-aware optimized image generation
+- Improve the DOMRenderer's node allocation algorithm of the pool
 
 Developer Guide
 - http://sk-planet-webtechteam.github.io/Planet-HTML5-Game-Engine/gettingStarted/index.html
