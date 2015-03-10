@@ -3,7 +3,6 @@ define("ocb/resource", [], function(){
         imagePath : "img/",
         images : {
             "bg" : "bg.png",
-            "coin" : "coin.png",
             "tiles" : "tiles.png"
         },
         spriteInfo:{
@@ -13,14 +12,6 @@ define("ocb/resource", [], function(){
                 y:0,
                 width:320,
                 height:416,
-                frames:1
-            },
-            "coin":{
-                image:"coin",
-                x:0,
-                y:0,
-                width:45,
-                height:45,
                 frames:1
             },
             "countdown" : {
@@ -33,7 +24,7 @@ define("ocb/resource", [], function(){
                 duration:3000,
                 order:[0,1,2],
                 sleep:0,
-                loop:false,
+                loop:true,
                 easing:"linear"
             },
             "block1" : {
@@ -44,8 +35,37 @@ define("ocb/resource", [], function(){
                 height:16,
                 frames:1
             },
-            "block1_killed" : {
-
+            "block2" : {
+                image:"tiles",
+                x:0,
+                y:16,
+                width:32,
+                height:16,
+                frames:1
+            },
+            "block3" : {
+                image:"tiles",
+                x:0,
+                y:32,
+                width:32,
+                height:16,
+                frames:1
+            },
+            "block4" : {
+                image:"tiles",
+                x:0,
+                y:48,
+                width:32,
+                height:16,
+                frames:1
+            },
+            "block5" : {
+                image:"tiles",
+                x:144,
+                y:128,
+                width:32,
+                height:16,
+                frames:1
             },
             "paddle" : {
                 image:"tiles",
@@ -55,13 +75,18 @@ define("ocb/resource", [], function(){
                 height:16,
                 frames:1
             },
-            "paddle_sm": {
-
-            },
             "ball" : {
                 image:"tiles",
                 x:48,
                 y:64,
+                width:16,
+                height:16,
+                frames:1
+            },
+            "item" : {
+                image:"tiles",
+                x:96,
+                y:96,
                 width:16,
                 height:16,
                 frames:1

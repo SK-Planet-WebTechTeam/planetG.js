@@ -25,13 +25,12 @@ h1, h2, h3, h4, p, ol, ul, dl, dd{margin:0;padding:0;}
     height: 16px;
     background: url(../img/high/tiles.png) -48px -64px;
 }
-.bg {
-    z-index: 0;
-    width: 320px;
-    height: 416px;
-    background: url(../img/high/bg.png) 0px 0px;
+.item {
+    z-index: 9;
+    width: 16px;
+    height: 16px;
+    background: url(../img/high/tiles.png) -96px -96px;
 }
-
 body * {
     -webkit-transform: translate3d(0,0,0);
 }

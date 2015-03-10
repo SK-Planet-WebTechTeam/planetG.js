@@ -32,14 +32,15 @@ define("ocb/main",['pwge/game','ocb/entity',"pwge/util"],function( Game, entity,
         domRendererSelector: "rendererDOM",
         clearCanvasOnEveryFrame : false,
         smartRepaint: true, // root bg
-        debug : true
+        debug : false,
+        level : 0
     });
 
     var playBoard,
         endBoard;
 
     // Game Scenario when 'ready' triggered
-    game.on("ready",function(){
+    game.on("play",function(){
         var self = this;
 
         // make board for game play
@@ -48,11 +49,23 @@ define("ocb/main",['pwge/game','ocb/entity',"pwge/util"],function( Game, entity,
 
         // init game
         entity.init(game, playBoard);
-    });
 
-    // Game Scenario when 'play' triggered
-    game.on("play",function(){
-        entity.play();
+        // score event triggering from game
+        entity.on("score", function(){
+            $(".gameCanvas").trigger("score", {
+                point : entity.getScore()
+            });
+        });
+
+        entity.on("level", function(){
+            $(".gameCanvas").trigger("level", {
+                point : entity.getLevel()
+            });
+        });
+
+        alert("arkanoid v0.21");
+
+        entity.play(game.config.level);
         game.renderer.start();
         game.renderer.switchScene("playScene");
     });
@@ -60,7 +73,12 @@ define("ocb/main",['pwge/game','ocb/entity',"pwge/util"],function( Game, entity,
     game.on("end", function() {
         game.renderer.stop();
         alert("game over");
-    })
+    });
+
+    game.on("next", function() {
+        game.config.level+=1;
+        entity.nextStage();
+    });
 
     return game;
 });
