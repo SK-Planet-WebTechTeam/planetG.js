@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+<title>Arkanoid</title>
+<link rel="stylesheet" href="css/default.css">
+</head>
+<body style="margin:0">
+<main>
+    <section class="gameCanvas">
+        <!-- div for DOM Rendering -->
+        <div class="rendererDOM"></div> <!-- paddle -->
+        <div class="rendererDOM"></div> <!-- ball -->
+        <div class="rendererDOM"></div> <!-- item or ball -->
+        <div class="rendererDOM"></div> <!-- item or ball -->
+        <div class="rendererDOM"></div> <!-- item or ball -->
+        <div class="rendererDOM"></div> <!-- item or ball -->
+        <div class="rendererDOM"></div> <!-- gameover -->
+
+        <canvas id="gameCanvas" class="game _gameCanvas" style="display:block;margin:0;"></canvas>
+    </section>
+    <p>Score :<span id="score">0</span> Level :<span id="level">0</span></p>
+</main>
+
+<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="../../engine/lib/polyfill.js"></script>
+<script src="../../engine/lib/promise-0.1.1.js"></script>
+<script src="../../engine/lib/require.js" data-main="js/apigame.js?timestamp=1234"></script>
+</body>
+</html>
