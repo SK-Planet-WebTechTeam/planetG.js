@@ -1,11 +1,8 @@
 define("ocb/main",['pwge/game','ocb/entity',"pwge/util"],function( Game, entity, util){
 
-    // divec detection for performance tuning
+    // detection for performance tunning
     var ua = window.navigator.userAgent,
-        android = (/Android/i).test(ua),
-        gb = (/Android 2/i).test(ua),
-        ics = (/Android 4.0/i).test(ua),
-        kitkat = (/Android 4.4;/i).test(ua)||(/Android 4.4.2/i).test(ua);
+        kitkat = (/Android 4\.4\.[012]/i).test(ua); // android 4.4.0~4.4.2
 
     // make Game Object
     var game = new Game({
@@ -28,10 +25,10 @@ define("ocb/main",['pwge/game','ocb/entity',"pwge/util"],function( Game, entity,
         sortByZOnEveryFrame: false,
         planetWebview : false,
         quality : "high",
-        domRendering: true,
+        domRendering: kitkat, // only enabled if kitkat
         domRendererSelector: "rendererDOM",
         clearCanvasOnEveryFrame : false,
-        smartRepaint: true, // root bg
+        smartRepaint: kitkat, // for root bg, only enabled if kitkat
         debug : false,
         level : 0
     });
@@ -63,7 +60,7 @@ define("ocb/main",['pwge/game','ocb/entity',"pwge/util"],function( Game, entity,
             });
         });
 
-        //alert("arkanoid redesigned v0.25");
+        //alert("arkanoid redesigned v0.30");
 
         entity.play(game.config.level);
         game.renderer.start();

@@ -63,6 +63,7 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
     };
 
     Ball.prototype.step = function( dt ) { // dt = ms
+        var i;
         if (this.prev_dt) {
             var ddt = dt - this.prev_dt;
             this.entity.x += this.vx*ddt/10;
@@ -85,7 +86,7 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
         }
 
         // detecting collision to blocks
-        for(var i in blocks) {
+        for(i in blocks) {
             var block = blocks[i];
             switch(inCollisionRect(this, block)){
                 case 1:
@@ -102,15 +103,16 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
         }
 
         // detecting dying conditions
-        if (this.entity.y > this.maxY) {
+        if (this.entity.y > this.maxY+this.r) {
             // remove from queue
-            for(var i in balls) {
+            for(i in balls) {
                 if (balls[i]===this) {
                     balls.splice(i,1);
                     break;
                 }
             }
-            this.entity.destroy();
+            //this.entity.destroy();
+            this.vx = this.vy = 0;
 
             if (balls.length<=0) {
                 this.game.trigger("end");
@@ -256,7 +258,7 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
             this.entity.destroy();
 
             // remove from queue
-            for(var i in items) {
+            for(i in items) {
                 if (items[i]===this) {
                     items.splice(i,1);
                     break;
@@ -270,13 +272,18 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
         }
 
         // if out of window, destroy
-        if (this.entity.y > 900) {
+        if (this.entity.y > 900+100) {
+            // don't need to destroy, this will be destroyed when stage is cleared.
+            this.vy = 0;
+/*
+            this.entity.destroy();
             for(i in items) {
-                if (items[i].entity.y>900) {
+                if (items[i]===this) {
                     items.splice(i,1);
+                    break;
                 }
             }
-            this.entity.destroy();
+*/
         }
 
         this.prev_dt = dt;
@@ -286,7 +293,7 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
      * Paddle Object
      */
     var Paddle = function() {
-        this.x = 300;
+        this.x = 360;
         this.y = 810;
         this.width = 152;
         this.height = 28;
@@ -459,10 +466,14 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
     Entities.prototype.progress = function(dt) {
         var i,j;
         for(i in balls) {
-            if (balls[i]) { balls[i].step(dt); }
+            if (balls[i] && balls[i].entity && balls[i].entity.owner) {
+                balls[i].step(dt);
+            }
         }
         for(j in items) {
-            if (items[j]) { items[j].step(dt); }
+            if (items[j] && items[j].entity && items[j].entity.owner) {
+                items[j].step(dt);
+            }
         }
     };
 
@@ -647,9 +658,10 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
             //retry
             if (dx>40 && dx<340 && dy>615 && dy<725) {
                 gameover.domRenderer.refDOMNode.removeEventListener(END_EV, cbGameover);
-
-                console.log("retry");
                 gameover.destroy();
+
+                // reset bg
+                entity.bg._flush();
 
                 // reset data
                 game.config.level=0;
@@ -675,7 +687,8 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
 
     var clearBallsItems = function() {
         //clear balls & items
-        for(var i in balls) {
+        var i;
+        for(i in balls) {
             balls[i].entity.destroy();
         }
         balls=[];
@@ -683,6 +696,10 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
             items[i].entity.destroy();
         }
         items=[];
+        for(i in blocks) {
+            blocks[i].entity.destroy();
+        }
+        blocks=[];
     };
 
     game = entity = new Entities();

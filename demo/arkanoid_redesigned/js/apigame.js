@@ -5,7 +5,7 @@ requirejs.config({
         ocb: '../../demo/arkanoid_redesigned/js'
     },
     waitSeconds: 15,
-    urlArgs: "bust=002"
+    urlArgs: "bust=003"
 });
 
 
