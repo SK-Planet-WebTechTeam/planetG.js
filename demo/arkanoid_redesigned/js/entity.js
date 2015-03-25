@@ -111,8 +111,7 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
                     break;
                 }
             }
-            //this.entity.destroy();
-            this.vx = this.vy = 0;
+            this.entity.destroy();
 
             if (balls.length<=0) {
                 this.game.trigger("end");
@@ -137,7 +136,8 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
             }
         }
         if (block.hp<=0) {
-            score += block.score;
+            // it means that the number of live balls are IMPORTANT !
+            score += block.score * balls.length;
             entity.trigger("score");
 
             block.destroy();
@@ -273,9 +273,7 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
 
         // if out of window, destroy
         if (this.entity.y > 900+100) {
-            // don't need to destroy, this will be destroyed when stage is cleared.
-            this.vy = 0;
-/*
+
             this.entity.destroy();
             for(i in items) {
                 if (items[i]===this) {
@@ -283,7 +281,6 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
                     break;
                 }
             }
-*/
         }
 
         this.prev_dt = dt;

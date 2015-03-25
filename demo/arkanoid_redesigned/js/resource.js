@@ -31,24 +31,24 @@ define("ocb/resource", [], function(){
                 image:"count1",
                 x:0,
                 y:0,
-                width:181,
-                height:223,
+                width:216,
+                height:258,
                 frames:1
             },
             "count2" : {
                 image:"count2",
                 x:0,
                 y:0,
-                width:181,
-                height:223,
+                width:216,
+                height:258,
                 frames:1
             },
             "count3" : {
                 image:"count3",
                 x:0,
                 y:0,
-                width:181,
-                height:223,
+                width:216,
+                height:258,
                 frames:1
             },
             "block1" : {
