@@ -15,21 +15,27 @@ h1, h2, h3, h4, p, ol, ul, dl, dd{margin:0;padding:0;}
 }
 .paddle {
     z-index: 10;
-    width: 48px;
-    height: 16px;
-    background: url(../img/high/tiles.png) 0px -64px;
+    width: 152px;
+    height: 28px;
+    background: url(../img/high/paddle_m.png) 0px 0px;
 }
 .ball {
     z-index: 10;
-    width: 16px;
-    height: 16px;
-    background: url(../img/high/tiles.png) -48px -64px;
+    width: 24px;
+    height: 24px;
+    background: url(../img/high/ball.png) 0px 0px;
 }
 .item {
     z-index: 9;
-    width: 16px;
-    height: 16px;
-    background: url(../img/high/tiles.png) -96px -96px;
+    width: 36px;
+    height: 35px;
+    background: url(../img/high/item_plus.png) 0px 0px;
+}
+.gameover {
+    z-index: 9;
+    width: 720px;
+    height: 900px;
+    background: url(../img/high/msg_gameover.png) 0px 0px;
 }
 body * {
     -webkit-transform: translate3d(0,0,0);

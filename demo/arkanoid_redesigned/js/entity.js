@@ -11,7 +11,8 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
     var items = [];
     var blocks = [];
     var score = 0;
-    var speed = -1.2;
+    var initial_speed = -3;
+    var speed = initial_speed;
     var itemProperty = 0.1; // item gen prop
     var maxBall = 5;
 
@@ -19,14 +20,14 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
      * Ball Object
      */
     var Ball = function() {
-        this.x = 160;
-        this.y = 300;
-        this.r = 8;
+        this.x = 360;
+        this.y = 600;
+        this.r = 12;
         this.vx = -1;
         this.vy = -1;
-        this.wall_width = 24;
-        this.maxX = 320 - this.wall_width;
-        this.maxY = 416;
+        this.wall_width = 32;
+        this.maxX = 720 - this.wall_width;
+        this.maxY = 900;
         this.minX = 0 + this.wall_width;
         this.minY = 0 + this.wall_width;
         this.prev_dt = 0;
@@ -62,6 +63,7 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
     };
 
     Ball.prototype.step = function( dt ) { // dt = ms
+        var i;
         if (this.prev_dt) {
             var ddt = dt - this.prev_dt;
             this.entity.x += this.vx*ddt/10;
@@ -75,13 +77,16 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
 
         // detecting collision to paddle
         if (this.vy>0 && inCollisionWithPaddle(this, paddle) ) {
-            var prev_v_sum = Math.sqrt( Math.pow(Math.abs(this.vy),2) + Math.pow(Math.abs(this.vx),2) );
-            this.vx = (this.entity.x - paddle.entity.x)/20;
-            this.vy = Math.sqrt( Math.pow(prev_v_sum,2) - Math.pow(Math.abs(this.vx),2) )*(-1);
+            var v = Math.pow(Math.abs(this.vy),2) + Math.pow(Math.abs(this.vx),2),
+            vx = (this.entity.x - paddle.entity.x)/25,
+            vy = Math.sqrt( Math.abs(v - Math.pow(vx,2)) )*(-1);
+            this.vx = vx;
+            this.vy = vy;
+            //console.log( v, Math.pow(Math.abs(this.vy),2) + Math.pow(Math.abs(this.vx),2) );
         }
 
         // detecting collision to blocks
-        for(var i in blocks) {
+        for(i in blocks) {
             var block = blocks[i];
             switch(inCollisionRect(this, block)){
                 case 1:
@@ -98,9 +103,9 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
         }
 
         // detecting dying conditions
-        if (this.entity.y > this.maxY) {
+        if (this.entity.y > this.maxY+this.r) {
             // remove from queue
-            for(var i in balls) {
+            for(i in balls) {
                 if (balls[i]===this) {
                     balls.splice(i,1);
                     break;
@@ -110,6 +115,8 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
 
             if (balls.length<=0) {
                 this.game.trigger("end");
+                clearBallsItems();
+                showGameover(this.game, this.board);
             }
         }
 
@@ -129,7 +136,8 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
             }
         }
         if (block.hp<=0) {
-            score += block.score;
+            // it means that the number of live balls are IMPORTANT !
+            score += block.score * balls.length;
             entity.trigger("score");
 
             block.destroy();
@@ -137,7 +145,6 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
 
             if (blocks.length <= game.nUnbreakables) {
                 // clear this stage
-                blocks=[];
                 game.trigger("next");
             } else {
                 if (Math.random()<itemProperty && (balls.length+items.length<maxBall)) {
@@ -205,12 +212,12 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
      * Item Object
      */
     var Item = function() {
-        this.width = 16;
-        this.height = 16;
+        this.width = 36;
+        this.height = 35;
         this.vx = 0;
-        this.vy = 1;
+        this.vy = 2;
         this.prev_dt = 0;
-        this.r = 8;
+        this.r = 18;
     };
 
     Item.prototype.init = function( game, board, x, y ){
@@ -251,7 +258,7 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
             this.entity.destroy();
 
             // remove from queue
-            for(var i in items) {
+            for(i in items) {
                 if (items[i]===this) {
                     items.splice(i,1);
                     break;
@@ -265,13 +272,15 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
         }
 
         // if out of window, destroy
-        if (this.entity.y > 416) {
+        if (this.entity.y > 900+100) {
+
+            this.entity.destroy();
             for(i in items) {
-                if (items[i].entity.y>416) {
+                if (items[i]===this) {
                     items.splice(i,1);
+                    break;
                 }
             }
-            this.entity.destroy();
         }
 
         this.prev_dt = dt;
@@ -281,10 +290,10 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
      * Paddle Object
      */
     var Paddle = function() {
-        this.x = 160;
-        this.y = 376;
-        this.width = 48;
-        this.height = 16;
+        this.x = 360;
+        this.y = 810;
+        this.width = 152;
+        this.height = 28;
     };
 
     /**
@@ -345,8 +354,8 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
             x:0,
             y:0,
             z:0,
-            width:320,
-            height:416,
+            width:720,
+            height:900,
             //domRendering:game.config.domRendering
             rootBG: this.game.config.smartRepaint
         }).addTo(this.playBoard.name).setBaseSprite("bg");
@@ -370,30 +379,40 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
         // game logic function binding for each time interval
         this.game.renderer.on("step", this._progress );
 
-        // countdown
-        var countdown = this.game.entityPool.allocate({
-            x:320/2-32/2,
-            y:220,
-            z:1,
-            width:32,
-            height:48
-        }).addTo(this.playBoard.name).setBaseSprite("countdown");
-
         // create blocks
         createBlocks( self.game, self.playBoard, level );
 
         // create paddle
-        paddle = new Paddle();
-        paddle.init( self.game, self.playBoard );
+        if (!paddle) {
+            paddle = new Paddle();
+            paddle.init( self.game, self.playBoard );
+        }
+
+        //refresh score board
+        entity.trigger("score");
+        entity.trigger("level");
+
+        var countdown = this.game.entityPool.allocate({
+            x:720/2-181/2,
+            y:480,
+            z:1,
+            width:181,
+            height:223
+        }).addTo(this.playBoard.name).setBaseSprite("count3");
 
         setTimeout( function() {
-            countdown.destroy();
-
-            // create ball
-            var ball = new Ball();
-            ball.init( self.game, self.playBoard, speed, speed );
-            balls.push(ball);
-        }, 1000*3);
+            countdown.setBaseSprite("count2"); //._flush();
+            setTimeout( function() {
+                countdown.setBaseSprite("count1"); //._flush();
+                setTimeout( function() {
+                    countdown.destroy();
+                    // create ball
+                    var ball = new Ball();
+                    ball.init( self.game, self.playBoard, speed, speed );
+                    balls.push(ball);
+                }, 1000);
+            }, 1000 );
+        }, 1000 );
 
     };
 
@@ -401,14 +420,10 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
         var self = this;
         var level = self.game.config.level;
 
-        //clear balls
-        for(var i in balls) {
-            balls[i].entity.destroy();
-        }
-        balls=[];
+        clearBallsItems();
 
         // increase ball speed
-        speed *= 1.2;
+        speed *= 1.3;
 
         // create blocks
         if (!createBlocks( self.game, self.playBoard, level )) {
@@ -418,23 +433,28 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
             return;
         }
 
-        // countdown
         var countdown = this.game.entityPool.allocate({
-            x:320/2-32/2,
-            y:220,
+            x:720/2-181/2,
+            y:480,
             z:1,
-            width:32,
-            height:48
-        }).addTo(this.playBoard.name).setBaseSprite("countdown", self.game.boardManager._boards[0].now());
+            width:181,
+            height:223
+        }).addTo(this.playBoard.name).setBaseSprite("count3");
 
         setTimeout( function() {
-            countdown.destroy();
+            countdown.setBaseSprite("count2"); //._flush();
+            setTimeout( function() {
+                countdown.setBaseSprite("count1"); //._flush();
+                setTimeout( function() {
+                    countdown.destroy();
+                    // create ball
+                    var ball = new Ball();
+                    ball.init( self.game, self.playBoard, speed, speed );
+                    balls.push(ball);
+                }, 1000);
+            }, 1000 );
+        }, 1000 );
 
-            // create ball
-            var ball = new Ball();
-            ball.init( self.game, self.playBoard, speed, speed );
-            balls.push(ball);
-        }, 1000*3);
     }
 
     /**
@@ -443,10 +463,14 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
     Entities.prototype.progress = function(dt) {
         var i,j;
         for(i in balls) {
-            if (balls[i]) { balls[i].step(dt); }
+            if (balls[i] && balls[i].entity && balls[i].entity.owner) {
+                balls[i].step(dt);
+            }
         }
         for(j in items) {
-            if (items[j]) { items[j].step(dt); }
+            if (items[j] && items[j].entity && items[j].entity.owner) {
+                items[j].step(dt);
+            }
         }
     };
 
@@ -462,8 +486,8 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
      * Block Object
      */
     var Block = function() {
-        this.width = 32;
-        this.height =16;
+        this.width = 57;
+        this.height =27;
     };
 
     /**
@@ -501,9 +525,9 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
     var z = 5; // unbreakable
 
     var generateRandomMap = function() {
-        var m = [], cols=6, rows=10, maxZ=5, y, x, block, row, maxKindOfBlock=6, nZ=0;
+        var m = [], cols=8, rows=14, maxZ=5, y, x, block, row, maxKindOfBlock=6, nZ=0;
         for(y=0; y<rows; y++) {
-            row = [0];
+            row = [];
             for(x=0; x<cols; x++) {
                 block = Math.floor(Math.random()*maxKindOfBlock);
                 if (block===z) {
@@ -521,7 +545,7 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
     }
 
     map = [
-
+/*
         // level 1 : you have a time to think
         [
             [X,X,X,X,X,X,X,X],
@@ -531,7 +555,7 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
             [X,b,o,o,o,o,b,X],
             [X,X,X,X,X,X,X,X],
         ],
-
+*/
         // easy SK
         [   [b,b,b,X,X,b,X,b],
             [b,X,X,X,X,b,b,X],
@@ -540,16 +564,18 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
             [b,b,b,X,X,b,X,b] ],
 
         // SK lv2
-        [   [g,g,g,g,g,g,g,g],
-            [r,r,r,g,g,o,g,o],
-            [r,g,g,g,g,o,o,g],
-            [g,r,r,g,g,o,g,g],
-            [g,g,r,g,g,o,o,g],
-            [r,r,r,g,g,o,g,o],
-            [g,g,g,g,g,g,g,g] ],
+        [   [X,X,X,X,X,X,X,X],
+            [b,b,b,b,b,b,b,b],
+            [r,r,r,b,b,o,b,o],
+            [r,b,b,b,b,o,o,b],
+            [b,r,r,b,b,o,b,b],
+            [b,b,r,b,b,o,o,b],
+            [r,r,r,b,b,o,b,o],
+            [b,b,b,b,b,b,b,b] ],
 
         // maze
-        [   [r,r,r,r,r,r,r,r],
+        [   [X,X,X,X,X,X,X,X],
+            [r,r,r,r,r,r,r,r],
             [X,X,X,X,X,X,X,r],
             [r,r,r,r,r,r,X,r],
             [r,X,X,X,X,X,X,r],
@@ -557,10 +583,15 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
             [r,X,X,X,X,X,X,r],
             [r,r,r,r,r,r,X,r],
             [r,X,X,X,X,X,X,r],
-            [r,X,r,r,r,r,r,r] ],
+            [r,X,r,r,r,r,r,r],
+            [r,X,X,X,X,X,X,r],
+            [r,r,r,r,r,r,X,r],
+        ],
 
         // SK lv3
-        [   [g,g,g,g,g,g,g,g],
+        [   [X,X,X,X,X,X,X,X],
+            [X,X,X,X,X,X,X,X],
+            [g,g,g,g,g,g,g,g],
             [r,r,r,g,g,o,g,o],
             [r,g,g,g,g,o,o,g],
             [g,r,r,g,g,o,g,g],
@@ -571,6 +602,7 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
     ];
 
     var createBlocks = function( game, board, level ){
+        blocks=[];
         entity.trigger("level");
 
         if (level === map.length) {
@@ -581,7 +613,7 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
         }
 
         game.nUnbreakables = 0;
-        var block, x, y, offsetX=50, offsetY=50, hp;
+        var block, x, y, offsetX=150, offsetY=100, hp;
         // load blocks from level json
         for(y in map[level]) {
             //console.log( map[level][y] );
@@ -599,7 +631,73 @@ define("ocb/entity",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge
         }
 
         return true;
-    }
+    };
+
+    var showGameover = function(game, board) {
+        var gameover = game.entityPool.allocate({
+            x:0,
+            y:0,
+            z:999,
+            width:720,
+            height:900,
+            domRendering:true
+        }).addTo(board.name).setBaseSprite("gameover");
+
+        var cbGameover = function(e) {
+            // copy & paste : input-relative codes from pwge
+            var tx = (mobile) ? e.changedTouches[0].clientX - game.canvas.element.offsetLeft + window.scrollX : e.offsetX,
+            ratioX = tx / game.viewport.width,
+            dx = (ratioX * game.viewport.designWidth),
+            ty = (mobile) ? e.changedTouches[0].clientY - game.canvas.element.offsetTop + window.scrollY : e.offsetY
+            ratioY = ty / game.viewport.height,
+            dy = (ratioY * game.viewport.designHeight);
+
+            //retry
+            if (dx>40 && dx<340 && dy>615 && dy<725) {
+                gameover.domRenderer.refDOMNode.removeEventListener(END_EV, cbGameover);
+                gameover.destroy();
+
+                // reset bg
+                entity.bg._flush();
+
+                // reset data
+                game.config.level=0;
+                score = 0;
+                speed = initial_speed;
+
+                clearBallsItems();
+
+                entity.play(0);
+            }
+
+            //exit
+            if (dx>370 && dx<670 && dy>615 && dy<725) {
+                window.history.back();
+            }
+        };
+
+        gameover.domRenderer = game.domRenderer.getRendererNode("gameover");
+        gameover.domRenderer.setEntity(gameover);
+        gameover.domRenderer.refDOMNode.addEventListener(END_EV, cbGameover);
+
+    };
+
+    var clearBallsItems = function() {
+        //clear balls & items
+        var i;
+        for(i in balls) {
+            balls[i].entity.destroy();
+        }
+        balls=[];
+        for(i in items) {
+            items[i].entity.destroy();
+        }
+        items=[];
+        for(i in blocks) {
+            blocks[i].entity.destroy();
+        }
+        blocks=[];
+    };
 
     game = entity = new Entities();
     return game;
