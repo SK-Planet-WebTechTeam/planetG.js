@@ -201,11 +201,10 @@ define("pwge/loader", ["pwge/runtime", "pwge/soundManager", "pwge/util"], functi
             qualityPath = "low/";
 
         if (resourceMap.imagePath) {
-            if (loader._owner.viewport.imageRatio === 2/3) {
-                qualityPath = "mid/";
-            }
-            if (loader._owner.viewport.imageRatio === 1) {
+            if (loader._owner.viewport.pixelRatio >= 3) {
                 qualityPath = "high/";
+            } else if (loader._owner.viewport.pixelRatio >= 2) {
+                qualityPath = "mid/";
             }
 
             for (key in resourceMapImages) {
