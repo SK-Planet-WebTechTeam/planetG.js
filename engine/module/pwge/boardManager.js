@@ -79,7 +79,7 @@ define("pwge/board", ["pwge/boardManager", "pwge/util"], function(boardManager, 
                         if (this._z !== z) {
                             this._z = z;
                             if (this.owner) {
-                                if(!!this.entityZOrdering){
+                                if(!!self.entityZOrdering){
                                     self._orderedEntities = util.sortByZ(self.entities);
                                 } else {
                                     self._orderedEntities = self.entities;
