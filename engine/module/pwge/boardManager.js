@@ -327,14 +327,23 @@ define("pwge/board", ["pwge/boardManager", "pwge/util"], function(boardManager, 
 
         for (i = 0, len = orderedEntities.length; i < len; i++) {
             if (this._boardManager._owner.renderer.isRendering && this.enabled && orderedEntities[i] && orderedEntities[i].owner === this && orderedEntities[i].enabled) {
-                if (this._boardManager._owner.config.clearCanvasOnEveryFrame || !orderedEntities[i].rootBG || orderedEntities[i].dirty) {
+
+                if (this._boardManager._owner.config.smartRepaint) {
+                    if (this._boardManager._owner.config.clearCanvasOnEveryFrame) {
+                        throw "clearCanvasOnEveryFrame is not supported when smart repaint is enabled!!";
+                    }
+                    if (orderedEntities[i].rootBG) {
+                        //If it is set to rootBG, clear all invalidated rectangles by rendering the corresponding region from a background image
+                        orderedEntities[i]._updateInvalidatedRegion(bm.invalidatedRects);
+                    } else if (orderedEntities[i].dirty) {
+                        //entity is not rootBG, and it is dirty. flush the entity
                         orderedEntities[i]._flush();
                         orderedEntities[i].dirty = false;
-                }
-                else {
-                    // When Entity contains a root background and DOMRender is enabled,
-                    // only invalided regions are partially flushed
-                    orderedEntities[i]._updateInvalidatedRegion(bm.invalidatedRects);
+                    }
+                } else {
+                    //smart repaint가 꺼져있을때는 dirty 여부와 상관없이 항상 flush 하여 그린다
+                    orderedEntities[i]._flush();
+                    orderedEntities[i].dirty = false;
                 }
             }
         }
