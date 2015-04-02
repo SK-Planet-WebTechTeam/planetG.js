@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<title> SaChunSung </title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <style>
+        @font-face {
+            font-family: 'BryantBoldAlt';
+            src: url('font/bryant-boldalt.eot');
+            src: url('font/bryant-boldalt.eot') format('embedded-opentype'),
+                 url('font/bryant-boldalt.woff') format('woff'),
+                 url('font/bryant-boldalt.ttf') format('truetype'),
+                 url('font/bryant-boldalt.svg#BryantBoldAlt') format('svg');
+        }
+        body {margin:0;padding:0; font-family: "BryantBoldAlt", sans-serif;overflow:hidden;}
+        #container {width:100%;}
+        #canvas {border-bottom:1px solid white;}
+    </style>
+</head>
+<body>
+	<div id="container">
+		<canvas id="canvas"></canvas>
+	</div>
+	<script src="../../engine/lib/polyfill.js"></script>
+	<script src="../../engine/lib/promise-0.1.1.js"></script>
+	<script src="../../engine/lib/require.js" data-main="js/main.js"></script>
+</body>
+</html>

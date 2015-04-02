@@ -64,6 +64,7 @@ define("pwge/domRenderer", ["pwge/util", "util/PubSub"], function(util, PubSub){
         }
 
         //if miss, create a node with the prop and then return it
+        this.nodes[len-1].refDOMNode.className = this.selector; //need to be reset
         this.nodes[len-1].refDOMNode.classList.add(prop);
         this.nodes[len-1].classList.push(prop);
         return this.nodes.pop();
@@ -117,7 +118,7 @@ define("pwge/domRenderer", ["pwge/util", "util/PubSub"], function(util, PubSub){
 
         var node = this.refDOMNode;
         if(hardReset){
-            //hard reset node by removing texture/image
+            //prop을 제거해서 Texture를 완전히 reset
             this.classList.forEach(function(element, index, array){
                 node.classList.remove(element);
                 return true;
@@ -150,10 +151,11 @@ define("pwge/domRenderer", ["pwge/util", "util/PubSub"], function(util, PubSub){
     }
 
     DOMRenderingContext.prototype.draw = function( renderingCSSText ){
-        this.refDOMNode.style.cssText = renderingCSSText;
+        this.refDOMNode.style.cssText += renderingCSSText;
     };
 
     DOMRenderingContext.prototype.hide = function( ){
+        // this.refDOMNode.style.display = "none";
         this.refDOMNode.style.cssText = defaultTransformStyle;
     };
 

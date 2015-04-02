@@ -1,6 +1,6 @@
 define("pwge/util", function(){
     var /**
-         * pwge/util 모듈
+         * pwge/util module
          * @exports pwge/util
          */
         util = {},
@@ -23,9 +23,9 @@ define("pwge/util", function(){
     };
 
     /**
-     * 객체를 다른객체의 프로퍼티를 복사해와 확장한다.
+     * object extend method
      * @function
-     * @return {Object} 확장된 객체
+     * @return {Object} extended object
      */
     util.extend = function() {
         var parent = arguments[0], child, i = 1, v;
@@ -45,19 +45,18 @@ define("pwge/util", function(){
     };
 
     /**
-     * id 문자열을 생성한다.
+     * generated string for id.
      * @function
-     * @return {String} id 문자열
+     * @return {String} id string
      */
     util.generateId = function() {
         return Math.round(Math.random() * 100000).toString() + (+new Date()).toString();
     };
 
     /**
-     * 두 객체가 겹치는지 확인한다. (충돌감지)
-     * 두 객체의 x, y, width, height, anchorX, anchorY 프로퍼티를 사용하므로, entity를 직접 인자로 사용해도 된다.
-     * @param  {Object | Entity} o1 객체1.
-     * @param  {Object | Entity} o2 객체2.
+     * check if two objects are overlapped
+     * @param  {Object | Entity} o1 object 1
+     * @param  {Object | Entity} o2 object 2
      * @return {Boolean}
      */
     util.overlap = function(o1, o2) {
@@ -65,13 +64,11 @@ define("pwge/util", function(){
             o1.y <= o2.y + o2.height &&
             o2.x <= o1.x + o1.width &&
             o2.y <= o1.y + o1.height);
-
-        // return !((o1.y + o1.height - o1.anchorY < o2.y - o2.anchorY) || (o1.y - o1.anchorY > o2.y + o2.height - o2.anchorY) || (o1.x + o1.width - o1.anchorX < o2.x - o2.anchorX) || (o1.x - o1.anchorX > o2.x + o2.width - o2.anchorX));
     };
 
     /**
-     * 엘리먼트의 위치(오프셋)을 구한다.
-     * @param  {HTMLElement} el 위치를 구할 엘리먼트
+     * calculate the offset of the given element, starting from document left/top corner.
+     * @param  {HTMLElement} el element
      * @return {Object}
      */
     util.getOffset = function(el){
@@ -88,9 +85,9 @@ define("pwge/util", function(){
     };
 
     /**
-     * board에 추가된 entity들을 z값으로 정렬하기 위한 메서드
-     * @param  {Array} arr entity들의 배열
-     * @return {Array}     정렬된 entitiy들의 배열
+     * sort the given array
+     * @param  {Array} arr the array of Entity
+     * @return {Array}     the sorted array of Entity
      */
     util.sortByZ = function(arr) {
         var ret = [],

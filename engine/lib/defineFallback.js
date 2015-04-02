@@ -1,7 +1,7 @@
 /*
  * define fallback
- * require.js 모듈로 선언되었으나 require를 사용하지 않는 앱에서 해당 모듈을 사용하고자 할때,
- * 모든 require module을 global object로 등록 해서 사용 가능하게 해 줌
+ * in case when a module is deifned as the module type of require.js but it should be loaded without require.js,
+ * this fallback loads all require.js modules in a window namespace as a global object.
  */
 (function(){
     if ( !window.define ) {

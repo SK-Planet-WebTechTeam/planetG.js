@@ -1,3 +1,8 @@
+/* platform.js was made for supporting platform game
+ * platform game commonly needs background and map coordinate.
+ * So this plugin provides common functions for platform game.
+ * I am sure that this will be helpful to develop platform game easilly.
+ */
 define("plugin/platform",['pwge/spriteManager','pwge/boardManager','pwge/input','pwge/canvas','pwge/renderer','util/easing',"util/PubSub",'pwge/util'], function(spriteManager,boardManager,input,canvas,renderer,easing,PubSub,util ){
 
     // Base Object for Platform Game
@@ -10,14 +15,14 @@ define("plugin/platform",['pwge/spriteManager','pwge/boardManager','pwge/input',
     Platform.prototype = Object.create(PubSub.prototype);
 
     /**
-     * 맵 DB를 읽어와서 초기화 시킨다.
+     * Map DB reading and initializing
      */
     Platform.prototype.init = function( config ){
         var i, len;
 
         util.extend(this, config);
 
-        // 속도 향상을 위해서 배열을 프로퍼티로 변경
+        // changing array to obj property for performance
         this.mapObj = {};
         for ( i=0, len=this.mapObjArray.length ; i<len ; i++ ) {
             this.mapObj[ this.mapObjArray[i] ] = 1;
@@ -38,10 +43,10 @@ define("plugin/platform",['pwge/spriteManager','pwge/boardManager','pwge/input',
             this.jumpLimitObj[ this.jumpLimitObjArray[i] ] = 1;
         }
 
-        // 배경이 자동으로 움직이도록 설정
+        // background moving
         this.setBackGround();
 
-        // 맵 인덱스 초기화
+        // map index initializing
         this.timeLastMatch = new Date().getTime();
         this.timeStart = this.timeLastMatch ;
         this.lastIdx = 0;
@@ -49,7 +54,7 @@ define("plugin/platform",['pwge/spriteManager','pwge/boardManager','pwge/input',
         this.mapLastIdx = 0;
         this.mapCrntIdx = 0;
 
-        // 초기 맵을 구성
+        // Map initializing
         this.entities = [];
         for ( var i=0, iLen=this.mapSizeX + 2 ; i<iLen ; i++) {
             this.entities[i] = [];
@@ -60,10 +65,10 @@ define("plugin/platform",['pwge/spriteManager','pwge/boardManager','pwge/input',
     };
 
     /**
-     * 배경을 오른쪽에 왼쪽으로 이동시켜 왼쪽에서 오른쪽으로 움직이는 효과를 준다.
+     * moving background
      */
     Platform.prototype.setBackGround = function() {
-        // 두개의 배경화면을 만들어 애니메이션으로 이동시킴
+        // making two backgrounds, binding moving-animation
         var bgAnimation1 = {
                 duration : this.bgRotationTime,
                 from : {x:0},
@@ -101,7 +106,7 @@ define("plugin/platform",['pwge/spriteManager','pwge/boardManager','pwge/input',
     };
 
     /**
-     * 하나의 맵 타일을 entity로 할당한다.
+     * assign map tile to entity
      */
     Platform.prototype.assignEntity = function( objName, idxI, idxJ ) {
         if ( objName in this.mapObj ){
@@ -119,7 +124,8 @@ define("plugin/platform",['pwge/spriteManager','pwge/boardManager','pwge/input',
     };
 
     /**
-     * 자동으로 왼쪽으로 이동하는 게임의 경우에 호출한다. ex) 쿠키런, Flappy Bird...
+     * moving all map tiles to leftside
+     * ex) cookie run, flappy bird...
      */
     Platform.prototype.moveLeft = function( dt, endCtx, endCB, createCB, delCB){
 
@@ -131,15 +137,15 @@ define("plugin/platform",['pwge/spriteManager','pwge/boardManager','pwge/input',
         this.crntIdx = (this.map.length - this.mapSizeX) * ( timeCrnt / this.totalTime );
         this.mapCrntIdx = Math.min( Math.floor(this.crntIdx), this.map.length-this.mapSizeX );
 
-        // 맵이 끝까지 가지 않은 경우
+        // checking map end
         if ( this.mapCrntIdx < this.map.length-this.mapSizeX-2 ) {
             for ( i=0, iLen=this.mapSizeX + 2 ; i<iLen ; i++) {
-                // 이동하면서 맵이 변경되는 경우
+                // when map tile needs reposition
                 if ( this.mapLastIdx + i < this.mapCrntIdx ) {
-                    // 이동하면서 화면에서 사라진 열(column) 메모리 릴리즈
+                    // memory releasing for disappeared column of map tile
                     for ( j=0, jLen=this.mapSizeY ; j<jLen ; j++ ) {
                         if ( this.entities[i][j] ) {
-                            // 사라지는 타일의 타입을 callback 함수로 전달
+                            // callback when some map tile disappear
                             if ( typeof delCB !== 'undefined' ) {
                                 delCB.call(this, this.entities[i][j].type);
                             }
@@ -147,7 +153,7 @@ define("plugin/platform",['pwge/spriteManager','pwge/boardManager','pwge/input',
                         }
                     }
 
-                    // 화면에 보이게 된 열(column) 추가
+                    // adding new column of map tile
                     var newEntity = [];
                     for ( j=0, jLen=this.mapSizeY ; j<jLen ; j++ ) {
                         newEntity[j] = this.assignEntity( this.map[this.mapLastIdx+this.mapSizeX+2+i][j], this.mapSizeX+i, j );
@@ -157,16 +163,16 @@ define("plugin/platform",['pwge/spriteManager','pwge/boardManager','pwge/input',
                     }
                     this.entities.push( newEntity );
                 }
-                // 변경이 필요없는 경우, 현재 이후의 열(column)은 체크하지 않아도 됨
+                // not needs reposition
                 else {
                     break;
                 }
             }
 
-            // 사라진 부분을 제거
+            // deleting disappeared map tiles
             this.entities.splice( 0, i );
 
-            // 모든 타일의 위치 재조정
+            // reposition map tile
             var shift = Math.round((this.crntIdx-this.mapCrntIdx)*this.entitySizeX);
             for ( i=0, iLen=this.mapSizeX + 2 ; i<iLen ; i++) {
                 for ( j=0, jLen=this.mapSizeY ; j<jLen ; j++ ) {
@@ -176,11 +182,11 @@ define("plugin/platform",['pwge/spriteManager','pwge/boardManager','pwge/input',
                 }
             }
 
-            // // 충돌 및 추락하는 경우 체크
+            // detecting collision and drop to the ground
             this.jumper.checkCollision();
             this.jumper.checkDrop();
         }
-        // 맵이 끝까지 간 경우
+        // end of map
         else {
             if ( typeof endCB !== 'undefined' ) {
                 endCB.call( endCtx );
@@ -192,8 +198,8 @@ define("plugin/platform",['pwge/spriteManager','pwge/boardManager','pwge/input',
     };
 
     /**
-     * 멥의 유닛들(hinderArray)과 충돌하는지 체크한다.
-     * @return {Boolean}  충돌이 있으면 true를 리턴한다.
+     * collision detection with some map units(= hinderArray)
+     * @return {Boolean}  if collision, return true
      */
     Platform.prototype.isCollision = function( nx, ny, nw, nh ){
         var i, j, iLen, jLen,
@@ -213,7 +219,7 @@ define("plugin/platform",['pwge/spriteManager','pwge/boardManager','pwge/input',
                     gw = this.entities[i][j].width;
                     gh = this.entities[i][j].height;
 
-                    // 충돌
+                    // collision
                     if (  !((nx+nw < gx) || (gx+gw <nx) || (ny+nh <= gy) || (gy+gh <= ny)) ){
                         return true;
                     }
@@ -225,8 +231,8 @@ define("plugin/platform",['pwge/spriteManager','pwge/boardManager','pwge/input',
     };
 
     /**
-     * 멥의 유닛들(hinderArray)과 충돌하는지 체크한다.
-     * @return {Boolean}  충돌이 있으면 true를 리턴한다.
+     * collision detection with some map units(= hinderArray)
+     * @return {Boolean}  if collision, return true
      */
     Platform.prototype.isCollision = function( nx, ny, nw, nh ){
         var i, j, iLen, jLen,
@@ -246,13 +252,13 @@ define("plugin/platform",['pwge/spriteManager','pwge/boardManager','pwge/input',
                     gw = this.entities[i][j].width;
                     gh = this.entities[i][j].height;
 
-                    // 점수 획득
+                    // score
                     if (  !((nx+nw < gx) || (gx+gw <nx) || (ny+nh <= gy) || (gy+gh <= ny)) && this.entities[i][j].type === "coin"  ){
                         this.entities[i][j].destroy();
                         this.gameObject.addScore();
                         this.gameObject.addTime();
                     }
-                    // 충돌
+                    // collision
                     else if (  !((nx+nw < gx) || (gx+gw <nx) || (ny+nh <= gy) || (gy+gh <= ny)) && this.entities[i][j].type in this.hinderObj ){
                         return true;
                     }
@@ -264,8 +270,8 @@ define("plugin/platform",['pwge/spriteManager','pwge/boardManager','pwge/input',
     };
 
     /**
-     * 멥의 유닛들(hinderArray)이 같은 column에 있는지 체크한다.
-     * @return {Boolean}  같은 column에 있으면 true를 리턴한다.
+     * check whether main character is located in same column with some map unit (=hinderArray) or not
+     * @return {Boolean}  if same column, return true
      */
     Platform.prototype.isSameColumn = function( nx, ny, nw, nh, type ){
         var i, j, iLen, jLen;
@@ -286,8 +292,8 @@ define("plugin/platform",['pwge/spriteManager','pwge/boardManager','pwge/input',
     };
 
     /**
-     * 현재 ground 위에 있는지 체크한다.
-     * @return {Boolean | Number} ground 위에 있으면 해당 높이를, ground에 없으면 false로 리턴한다.
+     * check whether main character is on the ground or not
+     * @return {Boolean | Number} if not on the ground, return false
      */
     Platform.prototype.isOnGround = function( nx, ny, nw, nh ){
         var position,
@@ -309,7 +315,7 @@ define("plugin/platform",['pwge/spriteManager','pwge/boardManager','pwge/input',
                     gw = this.entities[i][j].width;
                     gh = this.entities[i][j].height;
 
-                    // collision
+                    // reposition
                     if (  !((nx+nw < gx) || (gx+gw <nx) || (ny+nh !== gy)) ){
                         position = gy - nh;
                         return position;
@@ -322,8 +328,7 @@ define("plugin/platform",['pwge/spriteManager','pwge/boardManager','pwge/input',
     };
 
     /**
-     * Jump하여 이동할 위치를 구한다.
-     * 맵에 장애물이 없으면 입력값을 그대로 리턴한다.
+     * calculating jump-position ( checking the ceil and blocking unit )
      */
     Platform.prototype.getJumpPosition = function( nx, ny, nw, nh ){
         var position = ny,
@@ -363,8 +368,7 @@ define("plugin/platform",['pwge/spriteManager','pwge/boardManager','pwge/input',
     };
 
     /**
-     * 낙하하여 떨어지는 위치를 구한다.
-     * 맵에 장애물이 없으면 입력값을 그대로 리턴한다.
+     * calculating drop-position ( checking the ground and blocking unit )
      */
     Platform.prototype.getDropPosition = function( nx, ny, nw, nh ){
         var position,

@@ -1,0 +1,99 @@
+@charset "utf-8";
+/*! normalize.css v3.0.1 | MIT License | git.io/normalize */html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block;vertical-align:baseline}audio:not([controls]){display:none;height:0}[hidden],template{display:none}a{background:0 0}a:active,a:hover{outline:0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:700}dfn{font-style:italic}h1{font-size:2em;margin:.67em 0}mark{background:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-.5em}sub{bottom:-.25em}img{border:0}svg:not(:root){overflow:hidden}figure{margin:1em 40px}hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}pre{overflow:auto}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}button,input,optgroup,select,textarea{color:inherit;font:inherit;margin:0}button{overflow:visible}button,select{text-transform:none}button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}input{line-height:normal}input[type=checkbox],input[type=radio]{box-sizing:border-box;padding:0}input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{height:auto}input[type=search]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-search-decoration{-webkit-appearance:none}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0}textarea{overflow:auto}optgroup{font-weight:700}table{border-collapse:collapse;border-spacing:0}td,th{padding:0}
+
+/* reset */
+h1, h2, h3, h4, p, ol, ul, dl, dd{margin:0;padding:0;}
+body{min-width:320px;overflow-x:hidden;max-width:760px;margin:0 auto;background:#fff;}
+/* canvas scaling을 비용이 싼 filter 사용 */
+#gameCanvas{image-rendering:-webkit-optimize-contrast;}
+/* DOM Renderer에서 사용할 node용 style */
+.gameCanvas{position:relative; overflow-x:hidden;}
+.rendererDOM{
+    position: absolute;
+    z-index: 10;
+    -webkit-transform-origin: left top;
+    -webkit-transform: translate3d(0,0,0);
+    background-repeat: no-repeat;
+}
+.globeDown {
+    width: 52px;
+    height: 58px;
+    background: url(../img/low/flappyball_globes.png) -9px -13px;
+    /*background-color: RGB(240,163,53);*/
+}
+.globeUp {
+    width: 52px;
+    height: 58px;
+    background: url(../img/low/flappyball_globes.png) -66px -80px;
+    /*background-color: RGB(240,163,53);*/
+}
+.bar {
+    width: 9px;
+    height: 72px;
+    /*background: url(../img/low/flappyball_globes.png) -83px -13px;*/
+    background-color: RGB(209,144,41);
+}
+body * {
+    -webkit-transform: translate3d(0,0,0);
+}
+
+/* point */
+.point{position:relative;padding:23.14% 0 0;overflow:hidden;color:#fff;background:#888787 url(../img/point.bg.gif);background-size:1%;}
+.point>h3,
+.point>dl,
+.point dt,
+.point dd,
+.point b,
+.point i{position:absolute;}
+.point>h3{top:0;right:0;left:0;}
+.point>dl{left:2%;top:10%;bottom:10%;right:.5%;}
+.point>dl>:nth-child(n+3):nth-child(-n+4){display:none;}
+.point dt{background-size:100%;background-repeat:no-repeat;background-position:center;height:44%;}
+.point dt:nth-of-type(1){top:28%;left:2%;width:42%;background-image:url(../img/best.score.png);}
+.point dt:nth-of-type(3){top:0;right:23%;width:7%;height:100%;background:url(../img/point.bird.png) no-repeat center;background-size:100%;}
+.point dd{top:28%;height:44%;white-space:nowrap;}
+.point dd:nth-of-type(1){left:46%;width:20%;}
+.point b,
+.point i{background:url(../img/num.png) no-repeat;}
+.point b{top:0;bottom:0;width:32%;background-size:1000%;overflow:hidden;color:rgba(0,0,0,0);}
+.point dd:nth-of-type(1)>b{background-color:#fff;}
+.point dd:nth-of-type(2)>b{background-color:#fad168;}
+.point b:nth-of-type(1){left:0;}
+.point b:nth-of-type(2){left:34%;}
+.point b:nth-of-type(3){left:68%;}
+.point b.n0{background-position:0 0;}
+.point b.n1{background-position:11% 0;}
+.point b.n2{background-position:22% 0;}
+.point b.n3{background-position:33% 0;}
+.point b.n4{background-position:44% 0;}
+.point b.n5{background-position:55% 0;}
+.point b.n6{background-position:66% 0;}
+.point b.n7{background-position:77% 0;}
+.point b.n8{background-position:89% 0;}
+.point b.n9{background-position:100% 0;}
+.point dd:nth-of-type(3){right:2%;width:19%;text-align:center;color:rgba(0,0,0,0);}
+.point i{top:0;bottom:0;width:32%;background-size:1160%;}
+.point i:nth-of-type(1){left:0;}
+.point i:nth-of-type(2){left:34%;}
+.point i:nth-of-type(3){left:68%;}
+.point i.n0{background-position:1% 95%;}
+.point i.n1{background-position:12% 95%;}
+.point i.n2{background-position:22.5% 95%;}
+.point i.n3{background-position:33.5% 95%;}
+.point i.n4{background-position:44.5% 95%;}
+.point i.n5{background-position:55.5% 95%;}
+.point i.n6{background-position:66.5% 95%;}
+.point i.n7{background-position:77% 95%;}
+.point i.n8{background-position:88% 95%;}
+.point i.n9{background-position:99% 95%;}
+
+.point-all dt:nth-of-type(1){background-image:url(../img/best.png);width:auto;}
+.point-all dt:nth-of-type(2){background-image:url(../img/score.png);}
+.point-all dt:nth-of-type(n+1):nth-of-type(-n+2){left:8%;width:22%;}
+.point-all dt:nth-of-type(3){left:65%;}
+.point-all dt:nth-of-type(3)+dd{left:74%;}
+.point-all dd:nth-of-type(n+1):nth-of-type(-n+2){left:36%;width:20%;}
+.point-all>dl>:nth-child(n+1):nth-child(-n+2){top:2%;}
+.point-all>dl>:nth-child(n+3):nth-child(-n+4){display:block;top:auto;bottom:2%;}
+.point>h3,
+.point dt{color:rgba(0,0,0,0);}

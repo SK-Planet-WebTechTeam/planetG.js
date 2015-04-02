@@ -9,7 +9,7 @@
  * ======================================================== */
 
 /**
- * easing 모듈
+ * easing module
  * @module util/easing
  * @see http://gsgd.co.uk/sandbox/jquery/easing/
  * @example

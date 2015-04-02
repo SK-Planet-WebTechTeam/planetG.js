@@ -9,7 +9,7 @@ define("pwge/board", ["pwge/boardManager", "pwge/util"], function(boardManager, 
      * var newBoard = boardPool.allocate("boardname");
      *
      * @example
-     * var newBoard = boardPool.allocate("boardname", { x : 50, y : 100 }); //All entitie Board의 기준점. Board내의 모든 Entity들의 위치값에 영향을 준다.
+     * var newBoard = boardPool.allocate("boardname", { x : 50, y : 100 }); //All entitie Board의 기준점. affects positions for all Entities on Board
      */
     var Board = function(name, options){
         this.name = name;
@@ -79,7 +79,7 @@ define("pwge/board", ["pwge/boardManager", "pwge/util"], function(boardManager, 
                         if (this._z !== z) {
                             this._z = z;
                             if (this.owner) {
-                                if(!!this.entityZOrdering){
+                                if(!!self.entityZOrdering){
                                     self._orderedEntities = util.sortByZ(self.entities);
                                 } else {
                                     self._orderedEntities = self.entities;
@@ -327,8 +327,9 @@ define("pwge/board", ["pwge/boardManager", "pwge/util"], function(boardManager, 
 
         for (i = 0, len = orderedEntities.length; i < len; i++) {
             if (this._boardManager._owner.renderer.isRendering && this.enabled && orderedEntities[i] && orderedEntities[i].owner === this && orderedEntities[i].enabled) {
-                if (this._boardManager._owner.config.clearCanvasOnEveryFrame || !orderedEntities[i].rootBG ) {
-                    orderedEntities[i]._flush();
+                if (this._boardManager._owner.config.clearCanvasOnEveryFrame || !orderedEntities[i].rootBG || orderedEntities[i].dirty) {
+                        orderedEntities[i]._flush();
+                        orderedEntities[i].dirty = false;
                 }
                 else {
                     // When Entity contains a root background and DOMRender is enabled,

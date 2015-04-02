@@ -99,7 +99,7 @@ define("pwge/game", ["pwge/runtime", "pwge/config", "pwge/canvas", "pwge/input",
             break;
         }
 
-        this.viewport.imageRatio = (Math.floor(this.viewport.pixelRatio) / 3);
+        this.viewport.imageRatio = Math.max( Math.floor(this.viewport.pixelRatio) / PIXEL_RATIO[this.viewport.designQuality], 1 / PIXEL_RATIO[this.viewport.designQuality] );
 
         //planet.webview
         if (this.runtime.planetWebview) {

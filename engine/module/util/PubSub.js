@@ -1,18 +1,18 @@
 define("util/PubSub", function(){
     /**
-     * util/PubSub 객체 모듈
-     * 다른 객체에서 상속해서 사용한다.
+     * util/PubSub object module
+     * it is designated to be used as a base object for inheritance.
      * @exports util/PubSub
      *
      * @example
-     * //PubSub객체 생성
+     * //PubSub object construction
      * var pubsub = new PubSub();
      * pubsub.on("eventName", callbackFunction);
      *
      * @example
-     * //PubSub 상속예제
+     * //PubSub inheritance example
      * var SomeClass = function() {
-     *     //PubSub.apply(this, arguments); //생성자함수에서 하는 일이 없기 때문에 생략가능하다.
+     *     //PubSub.apply(this, arguments); //it can be ommitted since constructor is empty as of now
      * };
      * SomeClass.prototype = Object.create(PubSub.prototype);
      *
@@ -22,10 +22,10 @@ define("util/PubSub", function(){
     var PubSub = function(){};
 
     /**
-     * 이벤트를 발생시킨다.
-     * @param  {String} eventName 이벤트명
-     * @param  {Object} obj       이벤트핸들러에 전달할 객체
-     * @return {Boolean}           이벤트핸들러에서 return false가 호출될경우 false를 리턴한다.
+     * trigger an event
+     * @param  {String} eventName the name of an event
+     * @param  {Object} obj       an object to be called upon with an event handler
+     * @return {Boolean}          return the result of an event handler
      * @example
      * pubsub.trigger("customEventName", something, somethingElse);
      */
@@ -38,8 +38,11 @@ define("util/PubSub", function(){
             return false;
         }
 
-        var args = Array.prototype.splice.call(arguments, 1),
-            ret = true, i, len;
+        var args = [], ret = true, i, len;
+
+        for (i = 1, len = arguments.length; i < len; i++) {
+            args.push(arguments[i]);
+        }
 
         for (i = 0, len = this._eventHandler[eventName].length; i < len; i++) {
             if (typeof this._eventHandler[eventName][i] !== "undefined" && !this._eventHandler[eventName][i].apply(this, args)) {
@@ -51,9 +54,9 @@ define("util/PubSub", function(){
     };
 
     /**
-     * 이벤트핸들러를 등록한다.
-     * @param  {String} eventName 이벤트명
-     * @param  {Function} handler   이벤트핸들러 함수
+     * register an event handler on an event
+     * @param  {String} eventName the name of an event
+     * @param  {Function} handler   an event handler
      * @return {util/PubSub}
      * @example
      * pubsub.on("customEventName", handlerFunction);
@@ -87,9 +90,9 @@ define("util/PubSub", function(){
     };
 
     /**
-     * 이벤트핸들러를 해제한다.
-     * @param  {String} eventName 이벤트명
-     * @param  {Function} handler   이벤트핸들러 함수
+     * de-register an event handler
+     * @param  {String} eventName the name of an event
+     * @param  {Function} handler an event handler
      * @return {util/PubSub}
      * @example
      * pubsub.off("customEventName", handlerFunction);
@@ -128,10 +131,10 @@ define("util/PubSub", function(){
     };
 
     /**
-     * 한번만 실행되는 이벤트핸들러를 등록한다.
-     * 실행된 이후에는 자동으로 해제된다.
-     * @param  {String} eventName 이벤트명
-     * @param  {Function} handler   이벤트핸들러 함수
+     * register an event handler that will be called only once.
+     * after being executed, the event handler will be de-registered automatically
+     * @param  {String} eventName the name of an event
+     * @param  {Function} handler the event hanler function
      * @return {util/PubSub}
      * @example
      * pubsub.on("customEventName", handlerFunction);

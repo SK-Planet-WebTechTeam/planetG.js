@@ -119,7 +119,7 @@ define("pwge/renderer/transition", ["util/easing"], function(easing){
 
 define("pwge/renderer", ["util/PubSub", "pwge/util", "pwge/renderer/transition"], function(PubSub, util, transition){
     /**
-     * renderer 모듈
+     * renderer module
      * @exports pwge/renderer
      * @requires util/PubSub
      * @requires pwge/util
@@ -173,13 +173,13 @@ define("pwge/renderer", ["util/PubSub", "pwge/util", "pwge/renderer/transition"]
 
             for (i = 0, len = boards.length; i < len; i++) {
                 if (this.isRendering() && boards[i].enabled && boards[i].dirty) {
-                    // console.log("ok it's dirty")
                     dirty = true;
                     break;
                 }
             }
 
-            if (dirty) { //step에 의해 페인팅될 내용이 갱신된 보드가 있는 경우에만 draw
+            if (dirty) {
+                //only when any dirty Entity exists, do rendering
                 if (this._owner.config.clearCanvasOnEveryFrame) {
                     canvas.clear();
                 }
@@ -204,7 +204,7 @@ define("pwge/renderer", ["util/PubSub", "pwge/util", "pwge/renderer/transition"]
             if (typeof transition !== "undefined") {
                 var from, to;
                 from = this.snapShot();
-                boards.forEach(function(board) { //임시로 전환후 스냅샷
+                boards.forEach(function(board) {
                     if (targetBoards.indexOf(board.name) > -1) {
                         board.enable();
                     } else {
@@ -212,7 +212,7 @@ define("pwge/renderer", ["util/PubSub", "pwge/util", "pwge/renderer/transition"]
                     }
                 });
                 to = this.snapShot();
-                boards.forEach(function(board) { //다시 모두 비활성화
+                boards.forEach(function(board) {
                     board.disable();
                 });
 
@@ -256,7 +256,6 @@ define("pwge/renderer", ["util/PubSub", "pwge/util", "pwge/renderer/transition"]
                 board.past = 0;
             });
 
-            // this._owner.canvas.clear();
             this._currentScene = null;
         });
 
@@ -270,8 +269,7 @@ define("pwge/renderer", ["util/PubSub", "pwge/util", "pwge/renderer/transition"]
     };
 
     /**
-     * 현재 씬을 강제 렌더링한다.
-     * 렌더링중에 반복해서 호출된다.
+     * execute rendering.
      * @return {renderer}
      */
     Renderer.prototype.render = function(time){
@@ -283,8 +281,8 @@ define("pwge/renderer", ["util/PubSub", "pwge/util", "pwge/renderer/transition"]
     };
 
     /**
-     * 렌더링을 시작한다.
-     * pause한 경우 재시작한다.
+     * start a rendering loop.
+     * restart when paused.
      * @return {renderer}
      */
     Renderer.prototype.start = function(){
@@ -298,15 +296,15 @@ define("pwge/renderer", ["util/PubSub", "pwge/util", "pwge/renderer/transition"]
     };
 
     /**
-     * 렌더링을 재시작한다.
+     * resume rendering.
      * @return {renderer}
      * @see renderer.start
      */
     Renderer.prototype.resume = Renderer.prototype.start;
 
     /**
-     * 렌더링을 일시정지한다.
-     * 이후 start시 resume된다.
+     * pause rendering.
+     * resume when starts again 
      * @return {renderer}
      */
     Renderer.prototype.pause = function(){
@@ -317,8 +315,7 @@ define("pwge/renderer", ["util/PubSub", "pwge/util", "pwge/renderer/transition"]
     };
 
     /**
-     * 렌더링을 중단한다.
-     * 이후 start시 처음부터 다시 시작된다.
+     * stop rendering.
      * @return {renderer}
      */
     Renderer.prototype.stop = function(){
@@ -331,8 +328,8 @@ define("pwge/renderer", ["util/PubSub", "pwge/util", "pwge/renderer/transition"]
     };
 
     /**
-     * 렌더러의 현재 진행 시간을 가져온다.
-     * @return {Number} 진행시간 (ms)
+     * get the current time tick of renderer.
+     * @return {Number} time progress in msec
      */
     Renderer.prototype.now = function(){
         return this._now;
@@ -343,9 +340,9 @@ define("pwge/renderer", ["util/PubSub", "pwge/util", "pwge/renderer/transition"]
     };
 
     /**
-     * scene을 만든다.
-     * @param  {String} sceneName scene의 이름
-     * @param  {String} boardName scene에 포함시킬 board의 이름. 또는 이름의 배열
+     * make scene.
+     * @param  {String} sceneName the name of scene
+     * @param  {String} boardName the name of Board or the array of name of Board to be included in Scene
      * @return {renderer}
      */
     Renderer.prototype.makeScene = function(sceneName, boardName){
@@ -354,9 +351,9 @@ define("pwge/renderer", ["util/PubSub", "pwge/util", "pwge/renderer/transition"]
     };
 
     /**
-     * scene을 전환한다. 전환된 scene에 포함된 board들만 enable되고, 나머지는 disable된다.
-     * @param  {String} sceneName 전환할 scene의 이름
-     * @param  {String | Object} transition 전환효과명 또는 전환효과옵션객체
+     * switch scene. Boards that are switched into are enabled, remaining Boards are disable.
+     * @param  {String} sceneName the name of Scene to be switched to
+     * @param  {String | Object} transition the name of Scene switching animation effect
      * @return {renderer}
      * @example
      * renderer.switchScene("targetScene");
@@ -390,7 +387,7 @@ define("pwge/renderer", ["util/PubSub", "pwge/util", "pwge/renderer/transition"]
     };
 
     /**
-     * 현재 재생중인 scene의 이름을 구한다.
+     * the name of a current scene
      * @return {String}
      */
     Renderer.prototype.getCurrentScene = function() {
@@ -398,8 +395,8 @@ define("pwge/renderer", ["util/PubSub", "pwge/util", "pwge/renderer/transition"]
     };
 
     /**
-     * 현재 재생중인 화면의 스냅샷을 구한다.
-     * @return {HTMLCanvasElement} 캔버스 엘리먼트 (오프스크린이므로 화면 재생에 영향을 주지 않는다.)
+     * take the snapshot of current canvas.
+     * @return {HTMLCanvasElement} offscreen canvas element
      */
     Renderer.prototype.snapShot = function() {
         var canvas = this._owner.canvas,
@@ -408,7 +405,7 @@ define("pwge/renderer", ["util/PubSub", "pwge/util", "pwge/renderer/transition"]
 
         canvas.ctx = offscreenCanvas.getContext("2d"); //temporarily switch context
         // canvas.ctx.putImageData(oldCtx.getImageData(0, 0, canvas.width, canvas.height), 0, 0);
-        canvas.ctx.drawImage(canvas.element, 0, 0, canvas.width, canvas.height); //이전 화면을 복사
+        canvas.ctx.drawImage(canvas.element, 0, 0, canvas.width, canvas.height); //copy canvas
         this.render(this._now);
         canvas.ctx = oldCtx; //restore context
         // document.body.appendChild(offscreenCanvas);
