@@ -459,6 +459,8 @@ define("pwge/entity", ["pwge/spriteManager", "pwge/util", "util/PubSub", "util/e
             var bm = this.owner.getBoardManager();
             bm.invalidatedRects.push(this.getInvalidatedRect());
             this.owner.removeEntity(this);
+        } else {
+            console.log("WARNING: destory entity that does not pertain to Board. Did you really mean it?");
         }
 
         this._objectPool.free(this);

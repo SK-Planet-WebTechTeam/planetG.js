@@ -100,6 +100,8 @@ define("pwge/board", ["pwge/boardManager", "pwge/util"], function(boardManager, 
             if (!this._boardManager._owner.config.sortByZOnEveryFrame) {
                 this._boardManager.sortByZBoards();
             }
+        } else {
+            throw "try to add entity that alreay exist. please fix your game";
         }
         return this;
     };
@@ -200,6 +202,8 @@ define("pwge/board", ["pwge/boardManager", "pwge/util"], function(boardManager, 
             entity.owner = null;
             this.entities.splice(this.entities.indexOf(entity), 1);
             this.dirty = true;
+        } else {
+            throw "try to remove entity that does not exist. please fix your game";
         }
         return this;
     };
